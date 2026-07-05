@@ -53,8 +53,10 @@ Create a new Shortcut named **Play on Echo**.
    - **Get Dictionary from Input**, then get `results` → first item.
    - title = `trackName`, artist = `artistName`, kind = `track`.
 
-   **Case album — regex `/album/[^/]+/(\d+)(?![^?]*[?&]i=)` (an `/album/` URL
-   with trailing digits and no `i=` parameter):**
+   **Case album — regex `/album/[^/]+/(\d+)(?!.*[?&]i=)` (an `/album/` URL
+   with trailing digits and no `i=` parameter anywhere in the query). Build
+   the If blocks in this order — track first — so a track URL can never fall
+   through to the album case:**
    - Album id = captured digits.
    - Lookup as above; title = `collectionName`, artist = `artistName`,
      kind = `album`.
@@ -62,18 +64,22 @@ Create a new Shortcut named **Play on Echo**.
    **Case playlist — URL contains `/playlist/`:**
    - **Get Contents of URL** on the expanded URL itself (GET).
    - **Match Text** on the page HTML:
-     `og:title" content="(.*?)(?: by (.*?))? on Apple Music"`
-   - name = capture group 1 (group 2 is the owner — not needed in the phrase),
-     kind = `playlist`. Works for personal `pl.u-` links (public once shared)
-     and editorial `pl.` links (no "by Owner" segment — the regex makes it
-     optional).
+     `og:title" content="(.*) on Apple Music"`
+   - Take capture group 1, then — only if it contains ` by ` — split on the
+     **last** ` by ` and keep the left side as the name (the right side is
+     the owner). Splitting on the last occurrence keeps names that themselves
+     contain " by " intact ("Songs by the Sea by Corey" → "Songs by the Sea").
+     Editorial `pl.` playlists have no owner segment; if an editorial name
+     itself ends in " by …" the split over-trims — rename or use the
+     quick-command Shortcut for that one.
+   - kind = `playlist`. Works for personal `pl.u-` links (public once shared).
 
 4. **Fallback guard.** After the track/album lookups, add an If: if `title`
    *has no value* (Lookup empty or unreachable), fetch the expanded URL and
    parse `og:title` exactly as in the playlist case — track/album pages carry
-   it too ("Title by Artist on Apple Music"; here group 2 IS the artist). If
-   that also fails, take the URL's slug segment, replace `-` with spaces, and
-   use it as `title` with no artist.
+   it too ("Title by Artist on Apple Music"; the last-` by `-split's right
+   side IS the artist here). If that also fails, take the URL's slug segment,
+   replace `-` with spaces, and use it as `title` with no artist.
 
 5. **Choose from List** — same target list as the quick-command Shortcut
    (must match the HA target map; see the device-change checklist in
