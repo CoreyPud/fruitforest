@@ -1,0 +1,189 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Play on Echo — Home Assistant package
+#
+# Receives {kind, title, artist, name, target, sender} from the Play on Echo
+# shortcuts and routes an exact typed play request to an Echo device or Alexa
+# speaker group via the Alexa Media Player integration.
+#
+# Install: copy to <config>/packages/play_on_echo.yaml (see docs/setup.md).
+# Requires: packages enabled in configuration.yaml, Alexa Media Player (HACS),
+# and this line in <config>/secrets.yaml (long random string, 32+ chars):
+#
+#   play_on_echo_webhook_id: REPLACE_WITH_LONG_RANDOM_ID
+#
+# The webhook id is the only credential for this endpoint. Never commit the
+# real value to this repo — it lives in secrets.yaml on the HA server only.
+# ─────────────────────────────────────────────────────────────────────────────
+
+automation:
+  - id: play_on_echo_webhook
+    alias: "Play on Echo — webhook receiver"
+    description: >-
+      Accepts POSTs from the Play on Echo shortcuts and hands the payload to
+      the router script. Returns 200 immediately; playback failures are
+      reported via notifications, not the HTTP response.
+    mode: queued
+    max: 5
+    triggers:
+      - trigger: webhook
+        webhook_id: !secret play_on_echo_webhook_id
+        allowed_methods:
+          - POST
+        local_only: true
+    actions:
+      - action: script.play_on_echo
+        data:
+          kind: "{{ trigger.json.kind | default('freeform', true) }}"
+          title: "{{ trigger.json.title | default('', true) }}"
+          artist: "{{ trigger.json.artist | default('', true) }}"
+          name: "{{ trigger.json.name | default('', true) }}"
+          target: "{{ trigger.json.target | default('', true) | lower | trim }}"
+          sender: "{{ trigger.json.sender | default('', true) }}"
+
+script:
+  play_on_echo:
+    alias: "Play on Echo — router"
+    description: >-
+      Resolves a friendly target name to an Echo entity or Alexa group and
+      issues the play command over the right channel. Callable directly from
+      other automations as well as from the webhook.
+    mode: queued
+    fields:
+      kind:
+        description: "track | album | playlist | freeform"
+        example: track
+      title:
+        description: "Track or album title (also the raw text for freeform)"
+        example: Songbird
+      artist:
+        description: "Artist name (tracks and albums)"
+        example: Fleetwood Mac
+      name:
+        description: "Playlist name (kind: playlist only)"
+        example: Sunday Morning
+      target:
+        description: "Friendly target name — a key of device_map or group_map"
+        example: kitchen
+      sender:
+        description: "Optional mobile_app device slug for failure notifications"
+        example: coreys_iphone
+    variables:
+      # ── EDIT HERE: your Echo devices ─────────────────────────────────────
+      # Friendly name → Alexa Media Player entity id.
+      # Find entity ids under Settings → Devices & Services → Alexa Media Player.
+      device_map:
+        kitchen: media_player.kitchen_echo
+        office: media_player.office_echo
+        bedroom: media_player.bedroom_echo
+      # ── EDIT HERE: your Alexa multi-room groups ──────────────────────────
+      # phrase:  the group name EXACTLY as it appears in the Alexa app
+      # carrier: the Echo entity the typed group command is issued against.
+      #          Pick your most reliably powered Echo — if the carrier is
+      #          offline, group sends fail even though the group is healthy.
+      group_map:
+        everywhere:
+          phrase: Everywhere
+          carrier: media_player.kitchen_echo
+      # ─────────────────────────────────────────────────────────────────────
+      # Phrase templates per kind. freeform passes the user's text verbatim.
+      # Exact wording may be tuned after the U1 probes (docs/setup.md).
+      search_phrase: >-
+        {%- if kind == 'track' -%}
+          {{ title }}{{ ' by ' ~ artist if artist else '' }}
+        {%- elif kind == 'album' -%}
+          the album {{ title }}{{ ' by ' ~ artist if artist else '' }}
+        {%- elif kind == 'playlist' -%}
+          the playlist {{ name }}
+        {%- else -%}
+          {{ title }}
+        {%- endif -%}
+    sequence:
+      - choose:
+          # ── Single Echo: provider-typed Apple Music play ──────────────────
+          - conditions: "{{ target in device_map }}"
+            sequence:
+              - variables:
+                  player: "{{ device_map[target] }}"
+              - if:
+                  - condition: template
+                    value_template: "{{ states(player) in ['unavailable', 'unknown'] }}"
+                then:
+                  - action: script.play_on_echo_notify_failure
+                    data:
+                      sender: "{{ sender }}"
+                      message: >-
+                        {{ target }} ({{ player }}) is unavailable. Alexa Media
+                        Player most likely needs re-authentication — see
+                        Troubleshooting in docs/setup.md.
+                else:
+                  - action: media_player.play_media
+                    target:
+                      entity_id: "{{ player }}"
+                    data:
+                      media_content_type: APPLE_MUSIC
+                      media_content_id: "{{ search_phrase }}"
+          # ── Alexa group: typed text command via the carrier Echo ──────────
+          # Group entities cannot be targeted directly; the typed command
+          # rides on the carrier device, exactly like a spoken request.
+          - conditions: "{{ target in group_map }}"
+            sequence:
+              - variables:
+                  carrier: "{{ group_map[target].carrier }}"
+                  group_phrase: "{{ group_map[target].phrase }}"
+              - if:
+                  - condition: template
+                    value_template: "{{ states(carrier) in ['unavailable', 'unknown'] }}"
+                then:
+                  - action: script.play_on_echo_notify_failure
+                    data:
+                      sender: "{{ sender }}"
+                      message: >-
+                        Carrier Echo {{ carrier }} for group "{{ group_phrase }}"
+                        is unavailable, so group sends cannot be issued. Check
+                        the carrier device or re-authenticate Alexa Media Player.
+                else:
+                  - action: media_player.play_media
+                    target:
+                      entity_id: "{{ carrier }}"
+                    data:
+                      media_content_type: custom
+                      media_content_id: >-
+                        play {{ search_phrase }} on apple music on {{ group_phrase }}
+        # ── Unknown target ──────────────────────────────────────────────────
+        default:
+          - action: script.play_on_echo_notify_failure
+            data:
+              sender: "{{ sender }}"
+              message: >-
+                Unknown target "{{ target }}". Known targets:
+                {{ (device_map.keys() | list + group_map.keys() | list) | join(', ') }}.
+                Update the shortcut's picker or the target map in
+                play_on_echo.yaml (see the device-change checklist).
+
+  play_on_echo_notify_failure:
+    alias: "Play on Echo — failure notification"
+    description: >-
+      Records a failure as a persistent notification and, when a sender slug
+      was provided, pushes it to that device's companion app.
+    mode: queued
+    fields:
+      sender:
+        description: "mobile_app notify slug of the sending device (may be empty)"
+        example: coreys_iphone
+      message:
+        description: "Human-readable failure description"
+        example: Kitchen Echo is unavailable.
+    sequence:
+      - action: persistent_notification.create
+        data:
+          title: "Play on Echo failed"
+          message: "{{ message }}"
+      - if:
+          - condition: template
+            value_template: "{{ sender is defined and sender != '' }}"
+        then:
+          - action: "notify.mobile_app_{{ sender }}"
+            continue_on_error: true
+            data:
+              title: "Play on Echo failed"
+              message: "{{ message }}"
