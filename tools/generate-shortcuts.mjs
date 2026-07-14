@@ -13,6 +13,12 @@ const webhookUrl =
   "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID";
 const sender = process.env.PLAY_ON_ECHO_SENDER || "";
 
+let uuidCounter = 0;
+const nextUuid = () => {
+  uuidCounter += 1;
+  return `00000000-0000-4000-8000-${uuidCounter.toString(16).padStart(12, "0")}`;
+};
+
 const token = (string, attachmentsByRange = {}) => ({
   WFSerializationType: "WFTextTokenString",
   Value: { string, attachmentsByRange },
@@ -22,7 +28,7 @@ const actionOutput = (name) => ({
   WFSerializationType: "WFTextTokenAttachment",
   Value: {
     Type: "ActionOutput",
-    OutputUUID: crypto.randomUUID(),
+    OutputUUID: nextUuid(),
     ...(name ? { OutputName: name } : {}),
   },
 });
@@ -239,7 +245,7 @@ const replaceText = ({ find, replace = "", regex = false, input = null, output }
   );
 
 const conditional = ({ input = null, numberValue = 0, ifTrue = [], ifFalse = [] }) => {
-  const group = crypto.randomUUID();
+  const group = nextUuid();
   return [
     action("is.workflow.actions.conditional", {
       GroupingIdentifier: group,

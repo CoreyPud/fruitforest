@@ -35,7 +35,7 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.detect.link",
       "WFWorkflowActionParameters": {
-        "UUID": "aa131760-9be1-481f-a3c1-196b4c8e3f17",
+        "UUID": "00000000-0000-4000-8000-000000000006",
         "CustomOutputName": "Shared URLs"
       }
     },
@@ -73,7 +73,7 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
         "WFTextActionText": "freeform",
-        "UUID": "82227ec1-82b7-4adc-9102-463fab34674c",
+        "UUID": "00000000-0000-4000-8000-000000000034",
         "CustomOutputName": "Kind value"
       }
     },
@@ -85,7 +85,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "82227ec1-82b7-4adc-9102-463fab34674c",
+            "OutputUUID": "00000000-0000-4000-8000-000000000034",
             "OutputName": "Kind value"
           }
         }
@@ -99,18 +99,18 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "aa131760-9be1-481f-a3c1-196b4c8e3f17",
+            "OutputUUID": "00000000-0000-4000-8000-000000000006",
             "OutputName": "Shared URLs"
           }
         },
-        "UUID": "2801bc66-f0fb-489f-98a7-c28c26e2ee93",
+        "UUID": "00000000-0000-4000-8000-000000000007",
         "CustomOutputName": "Shared URL count"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "e4b5e1f9-f674-4815-8811-feff7693d1a8",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000035",
         "WFControlFlowMode": 0,
         "WFCondition": 2,
         "WFNumberValue": "0",
@@ -120,7 +120,7 @@
             "WFSerializationType": "WFTextTokenAttachment",
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "2801bc66-f0fb-489f-98a7-c28c26e2ee93",
+              "OutputUUID": "00000000-0000-4000-8000-000000000007",
               "OutputName": "Shared URL count"
             }
           }
@@ -135,11 +135,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "aa131760-9be1-481f-a3c1-196b4c8e3f17",
+            "OutputUUID": "00000000-0000-4000-8000-000000000006",
             "OutputName": "Shared URLs"
           }
         },
-        "UUID": "9a5796f9-1375-4734-8ad4-9d00c4430808",
+        "UUID": "00000000-0000-4000-8000-000000000011",
         "CustomOutputName": "Shared URL Input"
       }
     },
@@ -155,13 +155,13 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "9a5796f9-1375-4734-8ad4-9d00c4430808",
+                "OutputUUID": "00000000-0000-4000-8000-000000000011",
                 "OutputName": "Shared URL Input"
               }
             }
           }
         },
-        "UUID": "a5bd0c50-b959-4679-91e1-8543302b4704",
+        "UUID": "00000000-0000-4000-8000-000000000008",
         "CustomOutputName": "Track matches"
       }
     },
@@ -173,18 +173,18 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "a5bd0c50-b959-4679-91e1-8543302b4704",
+            "OutputUUID": "00000000-0000-4000-8000-000000000008",
             "OutputName": "Track matches"
           }
         },
-        "UUID": "b4928330-1e88-4c7d-896e-625d3527f30d",
+        "UUID": "00000000-0000-4000-8000-000000000009",
         "CustomOutputName": "Track match count"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "cef6a635-41ab-462d-ae9e-d940a07d73af",
+        "GroupingIdentifier": "00000000-0000-4000-8000-00000000002b",
         "WFControlFlowMode": 0,
         "WFCondition": 2,
         "WFNumberValue": "0",
@@ -194,7 +194,7 @@
             "WFSerializationType": "WFTextTokenAttachment",
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "b4928330-1e88-4c7d-896e-625d3527f30d",
+              "OutputUUID": "00000000-0000-4000-8000-000000000009",
               "OutputName": "Track match count"
             }
           }
@@ -209,11 +209,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "a5bd0c50-b959-4679-91e1-8543302b4704",
+            "OutputUUID": "00000000-0000-4000-8000-000000000008",
             "OutputName": "Track matches"
           }
         },
-        "UUID": "2188576f-45d8-4f56-9ebe-c3335641a6dc",
+        "UUID": "00000000-0000-4000-8000-000000000017",
         "CustomOutputName": "Track ID"
       }
     },
@@ -230,13 +230,13 @@
             "attachmentsByRange": {
               "{35, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "2188576f-45d8-4f56-9ebe-c3335641a6dc",
+                "OutputUUID": "00000000-0000-4000-8000-000000000017",
                 "OutputName": "Track ID"
               }
             }
           }
         },
-        "UUID": "fbe623ea-ffd8-4752-805e-04a8f0aefc57",
+        "UUID": "00000000-0000-4000-8000-000000000018",
         "CustomOutputName": "track lookup response"
       }
     },
@@ -247,11 +247,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "fbe623ea-ffd8-4752-805e-04a8f0aefc57",
+            "OutputUUID": "00000000-0000-4000-8000-000000000018",
             "OutputName": "track lookup response"
           }
         },
-        "UUID": "2cb833bb-804a-48df-a8b0-31a726501aa1",
+        "UUID": "00000000-0000-4000-8000-000000000019",
         "CustomOutputName": "track lookup dictionary"
       }
     },
@@ -264,11 +264,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "2cb833bb-804a-48df-a8b0-31a726501aa1",
+            "OutputUUID": "00000000-0000-4000-8000-000000000019",
             "OutputName": "track lookup dictionary"
           }
         },
-        "UUID": "1dc8e736-2604-4e57-b739-8cc0593527c3",
+        "UUID": "00000000-0000-4000-8000-00000000001a",
         "CustomOutputName": "track results"
       }
     },
@@ -280,11 +280,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "1dc8e736-2604-4e57-b739-8cc0593527c3",
+            "OutputUUID": "00000000-0000-4000-8000-00000000001a",
             "OutputName": "track results"
           }
         },
-        "UUID": "01aa494a-32e3-47c9-9d0f-85da77135a06",
+        "UUID": "00000000-0000-4000-8000-00000000001b",
         "CustomOutputName": "track lookup item"
       }
     },
@@ -296,7 +296,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "01aa494a-32e3-47c9-9d0f-85da77135a06",
+            "OutputUUID": "00000000-0000-4000-8000-00000000001b",
             "OutputName": "track lookup item"
           }
         }
@@ -314,7 +314,7 @@
             "VariableName": "Lookup Item"
           }
         },
-        "UUID": "309f1c56-dd69-4b58-a46f-a66919455bb0",
+        "UUID": "00000000-0000-4000-8000-00000000001c",
         "CustomOutputName": "track title"
       }
     },
@@ -326,7 +326,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "309f1c56-dd69-4b58-a46f-a66919455bb0",
+            "OutputUUID": "00000000-0000-4000-8000-00000000001c",
             "OutputName": "track title"
           }
         }
@@ -344,7 +344,7 @@
             "VariableName": "Lookup Item"
           }
         },
-        "UUID": "8dfe40fb-d320-4cf9-aa47-76b3f35f1fd7",
+        "UUID": "00000000-0000-4000-8000-00000000001d",
         "CustomOutputName": "track artist"
       }
     },
@@ -356,7 +356,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "8dfe40fb-d320-4cf9-aa47-76b3f35f1fd7",
+            "OutputUUID": "00000000-0000-4000-8000-00000000001d",
             "OutputName": "track artist"
           }
         }
@@ -366,7 +366,7 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
         "WFTextActionText": "track",
-        "UUID": "7a1930ee-bc96-48f6-b430-55b8aa174518",
+        "UUID": "00000000-0000-4000-8000-00000000001e",
         "CustomOutputName": "Kind value"
       }
     },
@@ -378,7 +378,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "7a1930ee-bc96-48f6-b430-55b8aa174518",
+            "OutputUUID": "00000000-0000-4000-8000-00000000001e",
             "OutputName": "Kind value"
           }
         }
@@ -387,7 +387,7 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "cef6a635-41ab-462d-ae9e-d940a07d73af",
+        "GroupingIdentifier": "00000000-0000-4000-8000-00000000002b",
         "WFControlFlowMode": 1
       }
     },
@@ -403,13 +403,13 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "9a5796f9-1375-4734-8ad4-9d00c4430808",
+                "OutputUUID": "00000000-0000-4000-8000-000000000011",
                 "OutputName": "Shared URL Input"
               }
             }
           }
         },
-        "UUID": "f1533d57-5ffe-4092-afb4-3865656f8575",
+        "UUID": "00000000-0000-4000-8000-00000000000a",
         "CustomOutputName": "Album matches"
       }
     },
@@ -421,18 +421,18 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "f1533d57-5ffe-4092-afb4-3865656f8575",
+            "OutputUUID": "00000000-0000-4000-8000-00000000000a",
             "OutputName": "Album matches"
           }
         },
-        "UUID": "bc36835b-94bf-4824-84a6-5ba1748e4717",
+        "UUID": "00000000-0000-4000-8000-00000000000b",
         "CustomOutputName": "Album match count"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "21e4baca-d4ab-48fa-99e3-bbbdf7a9aa23",
+        "GroupingIdentifier": "00000000-0000-4000-8000-00000000002a",
         "WFControlFlowMode": 0,
         "WFCondition": 2,
         "WFNumberValue": "0",
@@ -442,7 +442,7 @@
             "WFSerializationType": "WFTextTokenAttachment",
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "bc36835b-94bf-4824-84a6-5ba1748e4717",
+              "OutputUUID": "00000000-0000-4000-8000-00000000000b",
               "OutputName": "Album match count"
             }
           }
@@ -457,11 +457,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "f1533d57-5ffe-4092-afb4-3865656f8575",
+            "OutputUUID": "00000000-0000-4000-8000-00000000000a",
             "OutputName": "Album matches"
           }
         },
-        "UUID": "f74c0be2-45e4-4528-812b-9ebae4113c70",
+        "UUID": "00000000-0000-4000-8000-00000000001f",
         "CustomOutputName": "Album ID"
       }
     },
@@ -478,13 +478,13 @@
             "attachmentsByRange": {
               "{35, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "f74c0be2-45e4-4528-812b-9ebae4113c70",
+                "OutputUUID": "00000000-0000-4000-8000-00000000001f",
                 "OutputName": "Album ID"
               }
             }
           }
         },
-        "UUID": "74a8e540-863e-4447-a894-3a197104c720",
+        "UUID": "00000000-0000-4000-8000-000000000020",
         "CustomOutputName": "album lookup response"
       }
     },
@@ -495,11 +495,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "74a8e540-863e-4447-a894-3a197104c720",
+            "OutputUUID": "00000000-0000-4000-8000-000000000020",
             "OutputName": "album lookup response"
           }
         },
-        "UUID": "1d29f22d-3228-4ea6-b296-8b328f7cc8d7",
+        "UUID": "00000000-0000-4000-8000-000000000021",
         "CustomOutputName": "album lookup dictionary"
       }
     },
@@ -512,11 +512,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "1d29f22d-3228-4ea6-b296-8b328f7cc8d7",
+            "OutputUUID": "00000000-0000-4000-8000-000000000021",
             "OutputName": "album lookup dictionary"
           }
         },
-        "UUID": "e7c0d122-bcb5-4672-8e5a-a1d83d5f7efd",
+        "UUID": "00000000-0000-4000-8000-000000000022",
         "CustomOutputName": "album results"
       }
     },
@@ -528,11 +528,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "e7c0d122-bcb5-4672-8e5a-a1d83d5f7efd",
+            "OutputUUID": "00000000-0000-4000-8000-000000000022",
             "OutputName": "album results"
           }
         },
-        "UUID": "4dd7957a-7b1f-4be4-9e35-d7406cc8f130",
+        "UUID": "00000000-0000-4000-8000-000000000023",
         "CustomOutputName": "album lookup item"
       }
     },
@@ -544,7 +544,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "4dd7957a-7b1f-4be4-9e35-d7406cc8f130",
+            "OutputUUID": "00000000-0000-4000-8000-000000000023",
             "OutputName": "album lookup item"
           }
         }
@@ -562,7 +562,7 @@
             "VariableName": "Lookup Item"
           }
         },
-        "UUID": "868c481a-0d9f-479f-8780-a4efd776bd17",
+        "UUID": "00000000-0000-4000-8000-000000000024",
         "CustomOutputName": "album title"
       }
     },
@@ -574,7 +574,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "868c481a-0d9f-479f-8780-a4efd776bd17",
+            "OutputUUID": "00000000-0000-4000-8000-000000000024",
             "OutputName": "album title"
           }
         }
@@ -592,7 +592,7 @@
             "VariableName": "Lookup Item"
           }
         },
-        "UUID": "d6ab54c2-d8b0-4a09-9923-df78ab44979e",
+        "UUID": "00000000-0000-4000-8000-000000000025",
         "CustomOutputName": "album artist"
       }
     },
@@ -604,7 +604,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "d6ab54c2-d8b0-4a09-9923-df78ab44979e",
+            "OutputUUID": "00000000-0000-4000-8000-000000000025",
             "OutputName": "album artist"
           }
         }
@@ -614,7 +614,7 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
         "WFTextActionText": "album",
-        "UUID": "d5ff0aa7-58c4-4942-9de2-a50e51557bfd",
+        "UUID": "00000000-0000-4000-8000-000000000026",
         "CustomOutputName": "Kind value"
       }
     },
@@ -626,7 +626,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "d5ff0aa7-58c4-4942-9de2-a50e51557bfd",
+            "OutputUUID": "00000000-0000-4000-8000-000000000026",
             "OutputName": "Kind value"
           }
         }
@@ -635,7 +635,7 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "21e4baca-d4ab-48fa-99e3-bbbdf7a9aa23",
+        "GroupingIdentifier": "00000000-0000-4000-8000-00000000002a",
         "WFControlFlowMode": 1
       }
     },
@@ -651,13 +651,13 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "9a5796f9-1375-4734-8ad4-9d00c4430808",
+                "OutputUUID": "00000000-0000-4000-8000-000000000011",
                 "OutputName": "Shared URL Input"
               }
             }
           }
         },
-        "UUID": "4858f3c0-18e3-4b1f-a43a-0e45137c2fad",
+        "UUID": "00000000-0000-4000-8000-00000000000c",
         "CustomOutputName": "Playlist matches"
       }
     },
@@ -669,18 +669,18 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "4858f3c0-18e3-4b1f-a43a-0e45137c2fad",
+            "OutputUUID": "00000000-0000-4000-8000-00000000000c",
             "OutputName": "Playlist matches"
           }
         },
-        "UUID": "2fff49d9-1819-4701-96b7-5c468149b2b0",
+        "UUID": "00000000-0000-4000-8000-00000000000d",
         "CustomOutputName": "Playlist match count"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "cec44812-326d-47a7-aa7a-f803874e0cfa",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000029",
         "WFControlFlowMode": 0,
         "WFCondition": 2,
         "WFNumberValue": "0",
@@ -690,7 +690,7 @@
             "WFSerializationType": "WFTextTokenAttachment",
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "2fff49d9-1819-4701-96b7-5c468149b2b0",
+              "OutputUUID": "00000000-0000-4000-8000-00000000000d",
               "OutputName": "Playlist match count"
             }
           }
@@ -710,13 +710,13 @@
             "attachmentsByRange": {
               "{39, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "9a5796f9-1375-4734-8ad4-9d00c4430808",
+                "OutputUUID": "00000000-0000-4000-8000-000000000011",
                 "OutputName": "Shared URL Input"
               }
             }
           }
         },
-        "UUID": "baf27622-d0aa-49e9-b508-3f4cf1371a84",
+        "UUID": "00000000-0000-4000-8000-000000000012",
         "CustomOutputName": "Apple Music page"
       }
     },
@@ -727,11 +727,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "baf27622-d0aa-49e9-b508-3f4cf1371a84",
+            "OutputUUID": "00000000-0000-4000-8000-000000000012",
             "OutputName": "Apple Music page"
           }
         },
-        "UUID": "7ac2e41b-548b-455a-bf9e-e09a9f7d1c54",
+        "UUID": "00000000-0000-4000-8000-00000000000f",
         "CustomOutputName": "Playlist metadata"
       }
     },
@@ -744,11 +744,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "7ac2e41b-548b-455a-bf9e-e09a9f7d1c54",
+            "OutputUUID": "00000000-0000-4000-8000-00000000000f",
             "OutputName": "Playlist metadata"
           }
         },
-        "UUID": "6050145f-7c8e-47d5-b735-b297f0c59738",
+        "UUID": "00000000-0000-4000-8000-00000000000e",
         "CustomOutputName": "Playlist name"
       }
     },
@@ -760,7 +760,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "6050145f-7c8e-47d5-b735-b297f0c59738",
+            "OutputUUID": "00000000-0000-4000-8000-00000000000e",
             "OutputName": "Playlist name"
           }
         }
@@ -770,7 +770,7 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
         "WFTextActionText": "playlist",
-        "UUID": "d0c40714-0306-45be-8380-84b90789e360",
+        "UUID": "00000000-0000-4000-8000-000000000027",
         "CustomOutputName": "Kind value"
       }
     },
@@ -782,7 +782,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "d0c40714-0306-45be-8380-84b90789e360",
+            "OutputUUID": "00000000-0000-4000-8000-000000000027",
             "OutputName": "Kind value"
           }
         }
@@ -791,7 +791,7 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "cec44812-326d-47a7-aa7a-f803874e0cfa",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000029",
         "WFControlFlowMode": 1
       }
     },
@@ -803,7 +803,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "9a5796f9-1375-4734-8ad4-9d00c4430808",
+            "OutputUUID": "00000000-0000-4000-8000-000000000011",
             "OutputName": "Shared URL Input"
           }
         }
@@ -813,7 +813,7 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
         "WFTextActionText": "freeform",
-        "UUID": "13a3ba7e-6a07-4443-b331-f899b1df553b",
+        "UUID": "00000000-0000-4000-8000-000000000028",
         "CustomOutputName": "Kind value"
       }
     },
@@ -825,7 +825,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "13a3ba7e-6a07-4443-b331-f899b1df553b",
+            "OutputUUID": "00000000-0000-4000-8000-000000000028",
             "OutputName": "Kind value"
           }
         }
@@ -834,21 +834,21 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "cec44812-326d-47a7-aa7a-f803874e0cfa",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000029",
         "WFControlFlowMode": 2
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "21e4baca-d4ab-48fa-99e3-bbbdf7a9aa23",
+        "GroupingIdentifier": "00000000-0000-4000-8000-00000000002a",
         "WFControlFlowMode": 2
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "cef6a635-41ab-462d-ae9e-d940a07d73af",
+        "GroupingIdentifier": "00000000-0000-4000-8000-00000000002b",
         "WFControlFlowMode": 2
       }
     },
@@ -859,7 +859,7 @@
         "WFHTTPMethod": "GET",
         "WFHTTPBodyType": "JSON",
         "WFURL": "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID",
-        "UUID": "4cbe2229-e2a6-4e73-8dc4-f03f4c5cd8eb",
+        "UUID": "00000000-0000-4000-8000-00000000002c",
         "CustomOutputName": "FruitForest targets response"
       }
     },
@@ -870,11 +870,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "4cbe2229-e2a6-4e73-8dc4-f03f4c5cd8eb",
+            "OutputUUID": "00000000-0000-4000-8000-00000000002c",
             "OutputName": "FruitForest targets response"
           }
         },
-        "UUID": "1d050d50-bf3e-45b5-8804-242a2aba15de",
+        "UUID": "00000000-0000-4000-8000-00000000002d",
         "CustomOutputName": "FruitForest targets dictionary"
       }
     },
@@ -887,11 +887,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "1d050d50-bf3e-45b5-8804-242a2aba15de",
+            "OutputUUID": "00000000-0000-4000-8000-00000000002d",
             "OutputName": "FruitForest targets dictionary"
           }
         },
-        "UUID": "cab02a62-ec19-411c-bdc4-db3d0418ed6b",
+        "UUID": "00000000-0000-4000-8000-00000000002e",
         "CustomOutputName": "FruitForest target names"
       }
     },
@@ -904,11 +904,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "cab02a62-ec19-411c-bdc4-db3d0418ed6b",
+            "OutputUUID": "00000000-0000-4000-8000-00000000002e",
             "OutputName": "FruitForest target names"
           }
         },
-        "UUID": "ac202098-1900-4273-9ce0-df624980251b",
+        "UUID": "00000000-0000-4000-8000-000000000010",
         "CustomOutputName": "Chosen Item"
       }
     },
@@ -1027,7 +1027,7 @@
                     "attachmentsByRange": {
                       "{0, 1}": {
                         "Type": "ActionOutput",
-                        "OutputUUID": "ac202098-1900-4273-9ce0-df624980251b",
+                        "OutputUUID": "00000000-0000-4000-8000-000000000010",
                         "OutputName": "Chosen Item"
                       }
                     }
@@ -1079,7 +1079,7 @@
               },
               "{9, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "ac202098-1900-4273-9ce0-df624980251b",
+                "OutputUUID": "00000000-0000-4000-8000-000000000010",
                 "OutputName": "Chosen Item"
               }
             }
@@ -1091,14 +1091,14 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "e4b5e1f9-f674-4815-8811-feff7693d1a8",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000035",
         "WFControlFlowMode": 1
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.getcurrentsong",
       "WFWorkflowActionParameters": {
-        "UUID": "2fae1843-20af-4834-84bc-cd7ede84750d",
+        "UUID": "00000000-0000-4000-8000-000000000013",
         "CustomOutputName": "Current Song"
       }
     },
@@ -1110,18 +1110,18 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "2fae1843-20af-4834-84bc-cd7ede84750d",
+            "OutputUUID": "00000000-0000-4000-8000-000000000013",
             "OutputName": "Current Song"
           }
         },
-        "UUID": "95f0794a-8e27-424f-82a6-b5fed580e6fb",
+        "UUID": "00000000-0000-4000-8000-000000000014",
         "CustomOutputName": "Current Song count"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "f6707f89-1f19-4832-bcb5-858a18516268",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000033",
         "WFControlFlowMode": 0,
         "WFCondition": 2,
         "WFNumberValue": "0",
@@ -1131,7 +1131,7 @@
             "WFSerializationType": "WFTextTokenAttachment",
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "95f0794a-8e27-424f-82a6-b5fed580e6fb",
+              "OutputUUID": "00000000-0000-4000-8000-000000000014",
               "OutputName": "Current Song count"
             }
           }
@@ -1146,11 +1146,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "2fae1843-20af-4834-84bc-cd7ede84750d",
+            "OutputUUID": "00000000-0000-4000-8000-000000000013",
             "OutputName": "Current Song"
           }
         },
-        "UUID": "cd201882-94a6-4762-ab69-6a3b26964d64",
+        "UUID": "00000000-0000-4000-8000-000000000015",
         "CustomOutputName": "Current Album"
       }
     },
@@ -1162,7 +1162,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "cd201882-94a6-4762-ab69-6a3b26964d64",
+            "OutputUUID": "00000000-0000-4000-8000-000000000015",
             "OutputName": "Current Album"
           }
         }
@@ -1176,11 +1176,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "2fae1843-20af-4834-84bc-cd7ede84750d",
+            "OutputUUID": "00000000-0000-4000-8000-000000000013",
             "OutputName": "Current Song"
           }
         },
-        "UUID": "707c9751-cb3a-43f5-b96e-504c1213abe1",
+        "UUID": "00000000-0000-4000-8000-000000000016",
         "CustomOutputName": "Current Artist"
       }
     },
@@ -1192,7 +1192,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "707c9751-cb3a-43f5-b96e-504c1213abe1",
+            "OutputUUID": "00000000-0000-4000-8000-000000000016",
             "OutputName": "Current Artist"
           }
         }
@@ -1202,7 +1202,7 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
         "WFTextActionText": "album",
-        "UUID": "bcc04b57-1925-4f10-b421-49f251e68bec",
+        "UUID": "00000000-0000-4000-8000-00000000002f",
         "CustomOutputName": "Kind value"
       }
     },
@@ -1214,7 +1214,7 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "bcc04b57-1925-4f10-b421-49f251e68bec",
+            "OutputUUID": "00000000-0000-4000-8000-00000000002f",
             "OutputName": "Kind value"
           }
         }
@@ -1227,7 +1227,7 @@
         "WFHTTPMethod": "GET",
         "WFHTTPBodyType": "JSON",
         "WFURL": "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID",
-        "UUID": "58fff730-a311-40f6-a2df-b379dba2ee1b",
+        "UUID": "00000000-0000-4000-8000-000000000030",
         "CustomOutputName": "FruitForest targets response"
       }
     },
@@ -1238,11 +1238,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "58fff730-a311-40f6-a2df-b379dba2ee1b",
+            "OutputUUID": "00000000-0000-4000-8000-000000000030",
             "OutputName": "FruitForest targets response"
           }
         },
-        "UUID": "014388d5-e460-4fb3-b52a-0a76df3e8be4",
+        "UUID": "00000000-0000-4000-8000-000000000031",
         "CustomOutputName": "FruitForest targets dictionary"
       }
     },
@@ -1255,11 +1255,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "014388d5-e460-4fb3-b52a-0a76df3e8be4",
+            "OutputUUID": "00000000-0000-4000-8000-000000000031",
             "OutputName": "FruitForest targets dictionary"
           }
         },
-        "UUID": "dd9eae54-9c07-4497-bac7-79c22ade2dc2",
+        "UUID": "00000000-0000-4000-8000-000000000032",
         "CustomOutputName": "FruitForest target names"
       }
     },
@@ -1272,11 +1272,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "dd9eae54-9c07-4497-bac7-79c22ade2dc2",
+            "OutputUUID": "00000000-0000-4000-8000-000000000032",
             "OutputName": "FruitForest target names"
           }
         },
-        "UUID": "ac202098-1900-4273-9ce0-df624980251b",
+        "UUID": "00000000-0000-4000-8000-000000000010",
         "CustomOutputName": "Chosen Item"
       }
     },
@@ -1395,7 +1395,7 @@
                     "attachmentsByRange": {
                       "{0, 1}": {
                         "Type": "ActionOutput",
-                        "OutputUUID": "ac202098-1900-4273-9ce0-df624980251b",
+                        "OutputUUID": "00000000-0000-4000-8000-000000000010",
                         "OutputName": "Chosen Item"
                       }
                     }
@@ -1447,7 +1447,7 @@
               },
               "{9, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "ac202098-1900-4273-9ce0-df624980251b",
+                "OutputUUID": "00000000-0000-4000-8000-000000000010",
                 "OutputName": "Chosen Item"
               }
             }
@@ -1459,7 +1459,7 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "f6707f89-1f19-4832-bcb5-858a18516268",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000033",
         "WFControlFlowMode": 1
       }
     },
@@ -1474,14 +1474,14 @@
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "f6707f89-1f19-4832-bcb5-858a18516268",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000033",
         "WFControlFlowMode": 2
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "e4b5e1f9-f674-4815-8811-feff7693d1a8",
+        "GroupingIdentifier": "00000000-0000-4000-8000-000000000035",
         "WFControlFlowMode": 2
       }
     }

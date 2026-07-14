@@ -44,6 +44,7 @@ PLAY_SCHEMA = vol.Schema(
         vol.Optional("sender", default=""): cv.string,
     }
 )
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 @dataclass(slots=True)

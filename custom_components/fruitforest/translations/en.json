@@ -22,7 +22,12 @@
   "options": {
     "step": {
       "init": {
-        "title": "Manage FruitForest"
+        "title": "Manage FruitForest",
+        "menu_options": {
+          "devices": "Choose Echo devices",
+          "add_group": "Add or update an Alexa group",
+          "remove_group": "Remove an Alexa group"
+        }
       },
       "devices": {
         "title": "Choose Echo devices",
@@ -51,13 +56,6 @@
     },
     "abort": {
       "no_groups": "There are no Alexa groups to remove."
-    },
-    "menu": {
-      "init": {
-        "devices": "Choose Echo devices",
-        "add_group": "Add or update an Alexa group",
-        "remove_group": "Remove an Alexa group"
-      }
     }
   },
   "services": {
