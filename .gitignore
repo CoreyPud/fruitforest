@@ -1,4 +1,6 @@
 .DS_Store
+__pycache__/
+*.py[cod]
 
 # The signed shortcut builds may contain the private Home Assistant webhook.
 shortcuts/generated/*.shortcut

@@ -1,6 +1,10 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Play on Echo — Home Assistant package
 #
+# LEGACY / ROLLBACK ONLY. New installs should use custom_components/fruitforest,
+# which provides UI-managed Echo targets and a dynamic Shortcut picker. This
+# package accepts POST only and cannot serve targets to the current Shortcuts.
+#
 # Receives {kind, title, artist, name, target, sender} from the Play on Echo
 # shortcuts and routes an exact typed play request to an Echo device or Alexa
 # speaker group via the Alexa Media Player integration.

@@ -12,10 +12,6 @@ const webhookUrl =
   process.env.PLAY_ON_ECHO_WEBHOOK_URL ||
   "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID";
 const sender = process.env.PLAY_ON_ECHO_SENDER || "";
-const targets = (process.env.PLAY_ON_ECHO_TARGETS || "kitchen,office,masterbedroom,everywhere")
-  .split(",")
-  .map((target) => target.trim())
-  .filter(Boolean);
 
 const token = (string, attachmentsByRange = {}) => ({
   WFSerializationType: "WFTextTokenString",
@@ -90,13 +86,6 @@ const ask = ({ prompt, inputType = "Text", output }) =>
     }),
     output,
   );
-
-const list = (items, output = null) => {
-  const shortcutAction = action("is.workflow.actions.list", {
-    WFItems: items,
-  });
-  return output ? withOutput(shortcutAction, output) : shortcutAction;
-};
 
 const chooseFromList = ({ prompt, input = null, output }) =>
   withOutput(
@@ -224,6 +213,19 @@ const getDictionaryValue = ({ key, input = null, output }) =>
     output,
   );
 
+const chooseFruitForestTarget = (output) => {
+  const response = actionOutput("FruitForest targets response");
+  const dictionary = actionOutput("FruitForest targets dictionary");
+  const targetNames = actionOutput("FruitForest target names");
+
+  return [
+    getContents({ url: webhookUrl, output: response }),
+    getDictionaryFromInput({ input: response, output: dictionary }),
+    getDictionaryValue({ key: "targets", input: dictionary, output: targetNames }),
+    chooseFromList({ prompt: "Play where?", input: targetNames, output }),
+  ];
+};
+
 const replaceText = ({ find, replace = "", regex = false, input = null, output }) =>
   withOutput(
     action("is.workflow.actions.text.replace", {
@@ -321,21 +323,19 @@ const lookupBranch = ({ matches, idOutputName, titleKey, kind }) => {
 };
 
 const postActions = ({ titleSource, targetSource, bodyLabel }) => {
-  const playbackTargets = actionOutput("Playback targets");
   return [
-    list(targets, playbackTargets),
-    chooseFromList({ prompt: "Play where?", input: playbackTargets, output: targetSource }),
+    ...chooseFruitForestTarget(targetSource),
     getContents({
-    url: webhookUrl,
-    method: "POST",
-    jsonFields: [
-      field("kind", textWith`${variable("Kind")}`),
-      field("title", titleSource || textWith`${variable("Title")}`),
-      field("artist", textWith`${variable("Artist")}`),
-      field("name", textWith`${variable("Name")}`),
-      field("target", textWith`${targetSource}`),
-      field("sender", sender),
-    ],
+      url: webhookUrl,
+      method: "POST",
+      jsonFields: [
+        field("kind", textWith`${variable("Kind")}`),
+        field("title", titleSource || textWith`${variable("Title")}`),
+        field("artist", textWith`${variable("Artist")}`),
+        field("name", textWith`${variable("Name")}`),
+        field("target", textWith`${targetSource}`),
+        field("sender", sender),
+      ],
     }),
     showNotification({
       title: "Sent to Echo",
@@ -347,13 +347,11 @@ const postActions = ({ titleSource, targetSource, bodyLabel }) => {
 const quickCommand = () => {
   const providedInput = actionOutput("Provided Input");
   const chosenTarget = actionOutput("Chosen Item");
-  const playbackTargets = actionOutput("Playback targets");
 
   return workflow({
     actions: [
       ask({ prompt: "Play what?", output: providedInput }),
-      list(targets, playbackTargets),
-      chooseFromList({ prompt: "Play where?", input: playbackTargets, output: chosenTarget }),
+      ...chooseFruitForestTarget(chosenTarget),
       getContents({
         url: webhookUrl,
         method: "POST",

@@ -6,6 +6,10 @@ FruitForest connects Apple Shortcuts to Echo devices through Home Assistant
 and Alexa Media Player. Pick a speaker or multi-room group, then send a typed
 Apple Music request without speaking to Alexa.
 
+The FruitForest Home Assistant integration is the source of truth for rooms.
+Choose Echo devices in a native checklist, assign them to Home Assistant Areas,
+and both Shortcuts fetch the current destination list whenever they run.
+
 [Open the visual setup and usage guide](https://play-on-echo-guide.coreypud.chatgpt.site)
 
 ## Proven workflows
@@ -25,8 +29,10 @@ name. A dedicated copied-link playlist Shortcut is a planned enhancement.
 
 ## Layout
 
-- `home_assistant/packages/play_on_echo.yaml` — webhook receiver + play-router
-  script for Home Assistant (edit the target maps for your devices)
+- `custom_components/fruitforest/` — UI-configured Home Assistant integration,
+  dynamic target endpoint, playback router, actions, and diagnostics
+- `home_assistant/packages/play_on_echo.yaml` — legacy YAML package retained for
+  reference and rollback during migration
 - `shortcuts/quick-command.md` — build recipe: typed quick-play Shortcut
   (milestone 1 and permanent fallback)
 - `shortcuts/play-on-echo.md` — build recipe: the share-sheet Shortcut
@@ -45,3 +51,13 @@ The webhook id is the endpoint's only credential. It lives in the HA server's
 
 Signed `.shortcut` files are ignored because private builds can embed the live
 webhook URL. Generate them locally and never attach them to a public release.
+
+## Adding or changing a room
+
+1. In Home Assistant, assign the Echo device to the correct **Area**.
+2. Open **Settings → Devices & services → FruitForest → Configure**.
+3. Choose **Echo devices**, enable the device, and submit.
+4. Run either Shortcut. The updated Area name appears automatically.
+
+Alexa multi-room groups are managed from the same FruitForest configuration
+menu. Group names must match the Alexa app exactly.

@@ -12,12 +12,13 @@ Two shortcuts are intended to remain installed:
    reliable fallback when iOS does not include a URL in the share payload.
 3. Open the item's **More** menu (`...`) and choose **Share**.
 4. Choose **Play on Echo** in the share sheet.
-5. Choose `kitchen`, `office`, `masterbedroom`, or `everywhere`.
+5. Choose one of the current FruitForest destinations.
 6. Wait for the **Sent to Echo** notification.
 
-The shortcut identifies tracks and albums through Apple's public iTunes
-lookup API. Playlist names come from Apple Music's oEmbed API. It then sends a
-JSON request to the local Home Assistant webhook.
+The shortcut identifies tracks and albums through Apple's public iTunes lookup
+API. Playlist names come from Apple Music's oEmbed API. Before showing the room
+picker, it downloads the current target list from the local FruitForest
+webhook, then sends the JSON playback request to that same endpoint.
 
 ## Echo Quick Play
 
@@ -30,8 +31,7 @@ JSON request to the local Home Assistant webhook.
 ## Requirements
 
 - Connect to the home network so the local Home Assistant address is reachable.
-- Keep the target names synchronized with `device_map` and `group_map` in
-  `home_assistant/packages/play_on_echo.yaml`.
+- Configure targets under **Settings → Devices & services → FruitForest**.
 - Keep **Show in Share Sheet** enabled for **Play on Echo**, with all input
   types selected. Apple Music may share an iTunes product instead of a URL.
 
@@ -50,8 +50,11 @@ JSON request to the local Home Assistant webhook.
   notifications and Alexa Media Player authentication.
 - **Shortcut cannot connect**: confirm the device is on the home network and
   Home Assistant is available at its local address.
-- **New or renamed Echo is missing**: update both shortcut target lists and the
-  Home Assistant target maps.
+- **Rooms do not load**: the Shortcut has the wrong webhook URL, Home Assistant
+  is unavailable, or the old POST-only YAML package still owns the webhook.
+- **New or renamed Echo is missing**: assign its Home Assistant Area and enable
+  it under **FruitForest → Configure → Echo devices**. Reopen the Shortcut; no
+  rebuild is required.
 
 ## Rebuild
 

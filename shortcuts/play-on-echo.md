@@ -5,8 +5,9 @@ from Apple Music, pick a speaker or group, and the album plays. When Apple
 Music supplies a usable URL, the same Shortcut can also resolve tracks and
 playlists. One Shortcut covers iPhone, iPad, and Mac.
 
-Prerequisites: Stage 3 of `docs/setup.md` complete; `quick-command.md` built
-and verified (it proves the webhook leg this Shortcut reuses).
+Prerequisites: FruitForest is installed as described in `docs/setup.md`, and
+`quick-command.md` is built and verified (it proves the webhook leg this
+Shortcut reuses).
 
 ## How it resolves metadata (the logic you're about to build)
 
@@ -32,7 +33,8 @@ Create a new Shortcut named **Play on Echo**.
 - Share Sheet Types: choose **Select All**. Apple Music can provide an iTunes
   product or media share object on iOS rather than a bare URL; limiting the
   shortcut to URLs discards that input before the first action runs.
-- macOS additionally needs the extension switches — Stage 5 of `docs/setup.md`.
+- macOS additionally needs **Use as Quick Action** and **Show in Share Sheet**
+  enabled, plus the Shortcuts sharing extension in System Settings.
 
 **Actions in order:**
 
@@ -86,10 +88,10 @@ Create a new Shortcut named **Play on Echo**.
    playlist shape, send it as `freeform`. Home Assistant still receives a
    visible request instead of the shortcut failing silently.
 
-5. **Choose from List** — same target list as the quick-command Shortcut
-   (must match the HA target map; see the device-change checklist in
-   `docs/setup.md`). Connect its input explicitly to the List action instead
-   of relying on the previous-action connection.
+5. **Load and choose a destination.** Use **Get Contents of URL** with the
+   FruitForest webhook and method `GET`, convert the response to a Dictionary,
+   get its `targets` value, then pass that value to **Choose from List**. Both
+   Shortcuts now receive the same live destination list from Home Assistant.
 
 6. **Dictionary**
    - `kind`: from the matched case
@@ -118,7 +120,7 @@ To let other Shortcuts and personal automations start music without prompts
   (`kind: playlist, name: Sunday Morning, target: kitchen, sender: …`)
   followed by the same **Get Contents of URL** POST. Two actions, no prompts,
   same webhook, same router.
-- Any HA automation can also call `script.play_on_echo` directly with the same
+- Any HA automation can also call `fruitforest.play` directly with the same
   fields — no Shortcut involved at all.
 
 ## Verify (from the plan's acceptance checklist)

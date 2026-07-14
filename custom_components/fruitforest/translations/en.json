@@ -1,0 +1,81 @@
+{
+  "title": "FruitForest",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up FruitForest",
+        "description": "Choose the Echo media players that should appear in Shortcuts. FruitForest uses each device's Home Assistant Area as its room name. Keep the generated webhook ID private.",
+        "data": {
+          "echo_entities": "Echo devices",
+          "webhook_id": "Shortcut webhook ID"
+        }
+      }
+    },
+    "error": {
+      "echo_required": "Choose at least one Echo device.",
+      "webhook_too_short": "Use a webhook ID containing at least 16 characters."
+    },
+    "abort": {
+      "already_configured": "FruitForest is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Manage FruitForest"
+      },
+      "devices": {
+        "title": "Choose Echo devices",
+        "description": "Enabled devices appear automatically in both FruitForest Shortcuts. Their room names come from Home Assistant Areas.",
+        "data": {
+          "echo_entities": "Echo devices"
+        }
+      },
+      "add_group": {
+        "title": "Add or update an Alexa group",
+        "description": "Enter the group name exactly as it appears in the Alexa app. The carrier is a reliably powered Echo that sends the typed group command.",
+        "data": {
+          "group_name": "Alexa group name",
+          "carrier": "Carrier Echo"
+        }
+      },
+      "remove_group": {
+        "title": "Remove an Alexa group",
+        "data": {
+          "group_name": "Alexa group"
+        }
+      }
+    },
+    "error": {
+      "group_name_required": "Enter the Alexa group name."
+    },
+    "abort": {
+      "no_groups": "There are no Alexa groups to remove."
+    },
+    "menu": {
+      "init": {
+        "devices": "Choose Echo devices",
+        "add_group": "Add or update an Alexa group",
+        "remove_group": "Remove an Alexa group"
+      }
+    }
+  },
+  "services": {
+    "play": {
+      "name": "Play on Echo",
+      "description": "Send an Apple Music request to a configured FruitForest destination.",
+      "fields": {
+        "kind": { "name": "Kind", "description": "Track, album, playlist, or freeform request." },
+        "title": { "name": "Title", "description": "Track, album, or freeform request text." },
+        "artist": { "name": "Artist", "description": "Artist for a track or album." },
+        "name": { "name": "Playlist name", "description": "Exact playlist name." },
+        "target": { "name": "Destination", "description": "FruitForest room or Alexa group name." },
+        "sender": { "name": "Sender", "description": "Optional Home Assistant companion-app notification slug." }
+      }
+    },
+    "get_targets": {
+      "name": "Get destinations",
+      "description": "Return the destinations currently available to FruitForest clients."
+    }
+  }
+}

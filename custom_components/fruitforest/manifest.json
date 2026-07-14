@@ -1,0 +1,14 @@
+{
+  "domain": "fruitforest",
+  "name": "FruitForest",
+  "after_dependencies": ["alexa_media"],
+  "codeowners": ["@CoreyPud"],
+  "config_flow": true,
+  "documentation": "https://github.com/CoreyPud/fruitforest",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/CoreyPud/fruitforest/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}

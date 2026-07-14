@@ -14,21 +14,51 @@
       "WFWorkflowActionParameters": {
         "WFInputType": "Text",
         "WFAskActionPrompt": "Play what?",
-        "UUID": "b414e384-434b-49ad-a51d-8cd255cb8e4f",
+        "UUID": "fa09894f-172a-4c66-9914-683543c22acd",
         "CustomOutputName": "Provided Input"
       }
     },
     {
-      "WFWorkflowActionIdentifier": "is.workflow.actions.list",
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
       "WFWorkflowActionParameters": {
-        "WFItems": [
-          "kitchen",
-          "office",
-          "masterbedroom",
-          "everywhere"
-        ],
-        "UUID": "9c0fba70-3ada-4e9f-b995-1d9db5af0464",
-        "CustomOutputName": "Playback targets"
+        "Advanced": false,
+        "WFHTTPMethod": "GET",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID",
+        "UUID": "d7b6022e-b329-4e41-8a3b-57d98dc30fae",
+        "CustomOutputName": "FruitForest targets response"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.dictionary",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "d7b6022e-b329-4e41-8a3b-57d98dc30fae",
+            "OutputName": "FruitForest targets response"
+          }
+        },
+        "UUID": "23766014-0369-4666-b6b0-ae6a3e4c1344",
+        "CustomOutputName": "FruitForest targets dictionary"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "targets",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "23766014-0369-4666-b6b0-ae6a3e4c1344",
+            "OutputName": "FruitForest targets dictionary"
+          }
+        },
+        "UUID": "2354f37a-8cc1-4168-be24-a4989bac1257",
+        "CustomOutputName": "FruitForest target names"
       }
     },
     {
@@ -40,11 +70,11 @@
           "WFSerializationType": "WFTextTokenAttachment",
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "9c0fba70-3ada-4e9f-b995-1d9db5af0464",
-            "OutputName": "Playback targets"
+            "OutputUUID": "2354f37a-8cc1-4168-be24-a4989bac1257",
+            "OutputName": "FruitForest target names"
           }
         },
-        "UUID": "83b81834-2436-4b60-92f3-cf19fd9a3565",
+        "UUID": "fef48535-426e-44dc-8bf0-79dd9386feca",
         "CustomOutputName": "Chosen Item"
       }
     },
@@ -92,7 +122,7 @@
                     "attachmentsByRange": {
                       "{0, 1}": {
                         "Type": "ActionOutput",
-                        "OutputUUID": "b414e384-434b-49ad-a51d-8cd255cb8e4f",
+                        "OutputUUID": "fa09894f-172a-4c66-9914-683543c22acd",
                         "OutputName": "Provided Input"
                       }
                     }
@@ -115,7 +145,7 @@
                     "attachmentsByRange": {
                       "{0, 1}": {
                         "Type": "ActionOutput",
-                        "OutputUUID": "83b81834-2436-4b60-92f3-cf19fd9a3565",
+                        "OutputUUID": "fef48535-426e-44dc-8bf0-79dd9386feca",
                         "OutputName": "Chosen Item"
                       }
                     }
@@ -155,12 +185,12 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "b414e384-434b-49ad-a51d-8cd255cb8e4f",
+                "OutputUUID": "fa09894f-172a-4c66-9914-683543c22acd",
                 "OutputName": "Provided Input"
               },
               "{5, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "83b81834-2436-4b60-92f3-cf19fd9a3565",
+                "OutputUUID": "fef48535-426e-44dc-8bf0-79dd9386feca",
                 "OutputName": "Chosen Item"
               }
             }

@@ -1,225 +1,176 @@
-# Play on Echo — Setup Guide
+# FruitForest setup and maintenance
 
-Browse in Apple Music, share to a Shortcut, pick a speaker, and the exact music
-plays on your Echo — no voice mishearing. This guide takes you from a bare Home
-Assistant install to working share-sheet playback on iPhone, iPad, and Mac.
-
-Order matters: each stage builds on the previous one.
+FruitForest lets Apple Shortcuts send exact Apple Music requests to Echo
+devices through Home Assistant and Alexa Media Player. Home Assistant owns the
+destination list; the Shortcuts download that list each time they run.
 
 ## Prerequisites
 
-- Home Assistant server reachable from your household devices
-- Apple Music skill linked to Alexa (Alexa app → More → Skills → Apple Music),
-  with your Apple Music subscription on the account linked there
-- Alexa speaker groups defined in the Alexa app (e.g., "Everywhere")
-- HACS installed in Home Assistant
-- Home Assistant companion app on the phones/tablets that should receive
-  failure notifications
+- Home Assistant 2026.7 or later, reachable from household devices
+- HACS
+- Alexa Media Player, signed in and exposing each Echo as `media_player.*`
+- Apple Music enabled and linked in the Alexa app
+- Home Assistant Areas matching the room names you want to see
 
-## Stage 1 — Alexa Media Player integration
+## Install FruitForest with HACS
 
-1. HACS → search **Alexa Media Player** → install → restart HA.
-2. Amazon requires app-based 2FA for this integration. On the Amazon account:
-   open `https://www.amazon.com/a/settings/approval`, add an **authenticator
-   app**, and copy the **52-character app key** shown during setup — the
-   integration uses it to generate OTPs for silent re-login.
-3. Settings → Devices & Services → Add Integration → Alexa Media Player.
-   Log in through the built-in proxy; paste the 52-character key in the
-   Built-in 2FA App Key field.
-4. Confirm every Echo appears as a `media_player.*` entity. Record the entity
-   ids here:
+Until FruitForest is listed in HACS's default catalog, add it as a custom
+repository:
 
-   | Room | Entity id |
-   |------|-----------|
-   | Kitchen | `media_player.kitchen_echo` (example — replace) |
-   | Office | `media_player.office_echo` (example — replace) |
+1. Open **HACS → Integrations**.
+2. Open the menu and choose **Custom repositories**.
+3. Enter `https://github.com/CoreyPud/fruitforest` and choose **Integration**.
+4. Install **FruitForest**, then restart Home Assistant.
+5. Open **Settings → Devices & services → Add integration → FruitForest**.
 
-   Security note: after this stage, HA's config holds everything needed to log
-   into the Amazon account. Household-acceptable by decision; keep HA itself
-   access-controlled.
+The setup screen contains:
 
-## Stage 2 — Probes (run before installing anything else)
+- **Echo devices**: a multi-select checklist. Enable only speakers that should
+  appear in the Shortcuts.
+- **Shortcut webhook ID**: a private random identifier used by the local
+  Shortcut endpoint. Keep the generated value, or paste the existing
+  `play_on_echo_webhook_id` while migrating.
 
-Run these from **Developer Tools → Actions**. They de-risk the two unknowns the
-whole design rests on, and their results feed the package config in Stage 3.
+FruitForest uses each selected entity's Home Assistant Area as its display
+name. When an entity has no Area, it uses the entity's friendly name.
 
-**Probe A — single device, Apple Music provider:**
+## Migrate from the YAML package
+
+The old package and the integration cannot own the same webhook ID at the same
+time. Use this order:
+
+1. Note the current `play_on_echo_webhook_id` from Home Assistant's
+   `secrets.yaml`.
+2. Disable the **Play on Echo — webhook receiver** automation.
+3. Restart Home Assistant so the old webhook registration is released.
+4. Add the FruitForest integration and paste the existing webhook ID.
+5. Select the Echo entities that should appear.
+6. Add Alexa groups under **FruitForest → Configure**.
+7. Replace both Shortcuts with dynamic FruitForest builds.
+8. Test one single Echo and one Alexa group.
+9. Remove `packages/play_on_echo.yaml` from the Home Assistant configuration
+   after the tests pass.
+
+Using the existing webhook ID keeps the endpoint URL unchanged. The Shortcuts
+still need to be replaced once because the new builds perform a `GET` before
+playback to retrieve the current target list.
+
+## Assign Echo devices to rooms
+
+For each Echo:
+
+1. Open **Settings → Devices & services → Alexa Media Player**.
+2. Open the Echo device.
+3. Assign its **Area**, such as **Kitchen**, **Office**, or **Living Room**.
+4. Open **Settings → Devices & services → FruitForest → Configure**.
+5. Choose **Echo devices**, enable it, and submit.
+
+The new Area name appears in **Play on Echo** and **Echo Quick Play** the next
+time either Shortcut runs. There is no Shortcut list to edit.
+
+If two enabled Echos share the same Area, FruitForest appends each entity's
+friendly name so the picker remains unambiguous.
+
+## Add an Alexa speaker group
+
+Alexa groups are not Home Assistant Areas. They remain explicit because Alexa
+requires the group's exact spoken name and a carrier Echo.
+
+1. Open **Settings → Devices & services → FruitForest → Configure**.
+2. Choose **Add or update an Alexa group**.
+3. Enter the group name exactly as shown in the Alexa app, such as
+   `Everywhere`.
+4. Choose a reliably powered Echo as the carrier.
+5. Submit, then run a Shortcut to see the group.
+
+Adding the same group name again updates its carrier. Use **Remove an Alexa
+group** to delete it.
+
+## Test from Home Assistant
+
+Open **Developer tools → Actions** and run `fruitforest.play`:
 
 ```yaml
-action: media_player.play_media
-target:
-  entity_id: media_player.kitchen_echo   # one of yours
+action: fruitforest.play
 data:
-  media_content_type: APPLE_MUSIC
-  media_content_id: "Songbird by Fleetwood Mac"
+  kind: album
+  title: Rumours
+  artist: Fleetwood Mac
+  target: Living Room
 ```
 
-Expected: that exact track plays on that Echo. This confirms the provider-typed
-channel works against your account.
+To inspect the destination list without sending music, run
+`fruitforest.get_targets` with response data enabled.
 
-**Probe B — group playback phrasing.** Try both, note which works:
+Test these cases after setup or an Alexa Media Player update:
 
-```yaml
-# B1: typed text command (the type-to-Alexa pipeline; the safer bet)
-action: media_player.play_media
-target:
-  entity_id: media_player.kitchen_echo   # any single Echo
-data:
-  media_content_type: custom
-  media_content_id: "play the album Rumours by Fleetwood Mac on apple music on Everywhere"
+1. A track or album on a single Echo.
+2. A typed playlist request with a distinctive playlist name.
+3. An Alexa multi-room group.
+4. An unavailable Echo, which should produce a FruitForest notification.
 
-# B2: provider call with group suffix (undocumented; test it)
-action: media_player.play_media
-target:
-  entity_id: media_player.kitchen_echo
-data:
-  media_content_type: APPLE_MUSIC
-  media_content_id: "the album Rumours by Fleetwood Mac in the Everywhere group"
+## Build the Shortcuts
+
+Generate public placeholder sources:
+
+```sh
+node tools/generate-shortcuts.mjs
+node tools/test-generated-shortcuts.mjs
 ```
 
-Expected: all Echos in the group play in sync. Record the winner:
+For a private build, provide the local webhook URL and optional companion-app
+sender slug:
 
-> Group phrasing result: _____________ (date: _______)
-> Does the carrier Echo speak an audible acknowledgment? ______
+```sh
+PLAY_ON_ECHO_WEBHOOK_URL='http://homeassistant.local:8123/api/webhook/YOUR_ID' \
+PLAY_ON_ECHO_SENDER='coreys_iphone' \
+node tools/generate-shortcuts.mjs
+```
 
-The shipped package uses the B1 text-command form for groups. If only B2
-worked, adjust the group branch in `play_on_echo.yaml` accordingly.
+The webhook is local-only. The ID is the endpoint credential, so never commit
+the private generated Shortcut files or the real URL.
 
-**Probe C — negative probe.** Send a nonsense phrase
-(`media_content_id: "xqzzt blorp"` with `APPLE_MUSIC`) and observe what the
-Echo does (silence vs. spoken error). This tells you what a fuzzy-search miss
-looks like so you can recognize it later.
+## Day-to-day maintenance
 
-**Probe D — fallback rehearsal (do not skip).** The community integration
-breaks every month or two when Amazon changes things; the rehearsed fallback is
-the official core **Alexa Devices** integration (HA 2025.6+):
+### Add or replace an Echo
 
-1. Settings → Devices & Services → Add Integration → **Alexa Devices**
-   (same app-2FA requirement).
-2. Run its text command against one Echo and one group:
+Assign its Area, enable it in the FruitForest checklist, and test it. No
+Shortcut rebuild is required.
 
-   ```yaml
-   action: alexa_devices.send_text_command
-   data:
-     text: "play Songbird by Fleetwood Mac on apple music"
-     # target per the integration's docs — record what worked
-   ```
+### Rename a room
 
-3. Record the working phrasing and auth steps here:
+Rename the Home Assistant Area. FruitForest uses the new name immediately.
 
-   > Core integration result: _____________ (date: _______)
+### Remove an Echo
 
-If Alexa Media Player breaks for an extended period, the swap is: replace the
-router script's two `media_player.play_media` calls with
-`alexa_devices.send_text_command` calls carrying the same phrases. No Shortcut
-changes needed.
+Disable it in **FruitForest → Configure → Echo devices**. Removing it from
+Alexa Media Player alone leaves a stale selection that diagnostics will show
+as unavailable.
 
-## Stage 3 — Install the package
+### Alexa Media Player needs authentication
 
-1. Enable packages in `configuration.yaml` if not already:
+Reconfigure Alexa Media Player under **Settings → Devices & services**. A
+FruitForest target marked unavailable usually means its selected media-player
+entity is unavailable or was replaced during reauthentication.
 
-   ```yaml
-   homeassistant:
-     packages: !include_dir_named packages
-   ```
+### Shortcuts cannot load rooms
 
-2. Copy `home_assistant/packages/play_on_echo.yaml` from this repo into
-   `<config>/packages/`.
-3. Generate a long random webhook id and add it to `<config>/secrets.yaml`:
+Confirm the phone is on the home network and Home Assistant is reachable at
+the URL embedded in the Shortcut. A dynamic Shortcut requires FruitForest's
+`GET` endpoint; the old YAML webhook accepts only `POST`.
 
-   ```bash
-   openssl rand -hex 24
-   ```
+### Alexa plays the wrong playlist
 
-   ```yaml
-   # secrets.yaml — lives on the HA server ONLY
-   play_on_echo_webhook_id: <the random value>
-   ```
+Use **Echo Quick Play** and include a distinctive playlist name. Apple Music's
+Share Sheet still does not consistently provide playlist URLs, and Alexa may
+prefer public playlists with generic names.
 
-   **Never put the real webhook id in this repo, in the Shortcut recipes, or
-   in screenshots.** It is the endpoint's only credential; anything committed
-   here should show `REPLACE_WITH_LONG_RANDOM_ID`. Note the endpoint is
-   reachable by any device on your LAN — the id being long and random is the
-   protection, so treat it like a password.
+## Diagnostics and removal
 
-4. Edit the `device_map` and `group_map` in the package to match your Stage 1
-   inventory. For each group, pick the **carrier** — your most reliably powered
-   Echo. Group commands are issued through it; if it's unplugged, group sends
-   fail even when the rest of the group is fine.
-5. Restart HA (or reload automations + scripts).
-6. Smoke-test the webhook from any machine on your network:
+Download diagnostics from **Settings → Devices & services → FruitForest →
+Download diagnostics**. The webhook ID is redacted. Diagnostics include the
+selected entities, current names, destination types, and availability.
 
-   ```bash
-   curl -X POST http://<ha-host>:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID \
-     -H 'Content-Type: application/json' \
-     -d '{"kind":"track","title":"Songbird","artist":"Fleetwood Mac","target":"kitchen"}'
-   ```
-
-   Then verify the failure paths: an unknown target
-   (`"target":"garage"`) should produce a "Play on Echo failed" persistent
-   notification listing known targets, and a payload with a missing artist
-   should still play (title-only phrase).
-
-## Stage 4 — Shortcuts
-
-Build in this order:
-
-1. `shortcuts/quick-command.md` — the typed quick-command (proves the whole
-   pipeline end to end; also your fallback entry point).
-2. `shortcuts/play-on-echo.md` — the share-sheet Shortcut (the main event).
-
-Both recipes send an optional `sender` field. Set it to your phone's
-companion-app slug (Settings → Companion App → the name after
-`notify.mobile_app_`) so failures push to the device that sent the request.
-The Shortcut's own "Sent" notification only confirms delivery to HA — playback
-failures arrive via HA notifications, because the webhook acknowledges before
-Alexa is contacted.
-
-## Stage 5 — macOS
-
-The Mac's Music app shares the same `music.apple.com` URL as iOS, so the same
-Shortcut works unchanged. Two one-time switches, without which it will not
-appear at all:
-
-1. In Shortcuts (macOS): open Play on Echo → details (ⓘ) → enable
-   **Use as Quick Action** and **Show in Share Sheet** (wording varies slightly
-   by macOS version).
-2. System Settings → General → Login Items & Extensions → Extensions →
-   Sharing → enable **Shortcuts**.
-
-Then in Music: select a track/album/playlist → `···` → Share → Play on Echo.
-
-## Device-change checklist
-
-The target list lives in **two places by design** — the HA target map is
-canonical, and each Shortcut carries a static picker copy. When you add,
-remove, or rename an Echo or group:
-
-1. Update `device_map` / `group_map` in `<config>/packages/play_on_echo.yaml`
-   (and mirror the edit in this repo's copy).
-2. Update the picker list in the quick-command Shortcut.
-3. Update the picker list in the Play on Echo Shortcut.
-4. Send a test to the changed target.
-
-Skipping a Shortcut edit produces either a picker entry HA rejects (you'll get
-the unknown-target notification) or a missing new device.
-
-## Troubleshooting
-
-- **Sends succeed but nothing plays, no notification** — likely a fuzzy-search
-  miss (compare with Probe C behavior). Check the persistent notifications in
-  HA; if none, the phrase reached Alexa but matched something odd. Try the
-  quick-command Shortcut with a more specific phrase.
-- **"unavailable" failure notifications** — Alexa Media Player lost auth.
-  Settings → Devices & Services → Alexa Media Player → Reconfigure. If HA was
-  restarted and login loops: delete `<config>/alexa_media.<email>.pickle` and
-  restart. Breakage after Amazon-side changes typically has a fix within days —
-  check the integration's GitHub issues, and remember Probe D's rehearsed
-  fallback.
-- **Shortcut shows its own error alert** — the POST never reached HA (wrong
-  host, HA down, or not on home Wi-Fi with `local_only: true`). Remote sends
-  from cellular require the Nabu Casa webhook URL and `local_only: false` —
-  a deliberate exposure decision, deferred until wanted.
-- **Playlist plays the wrong thing** — generic playlist names ("Chill") can
-  lose to Apple Music editorial playlists in Alexa's search. Rename the
-  playlist to something distinctive.
+To remove FruitForest, delete its config entry, remove the HACS integration,
+restart Home Assistant, and delete the two Shortcuts. The integration does not
+modify Alexa devices, Home Assistant Areas, or Apple Music.

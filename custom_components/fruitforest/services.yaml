@@ -1,0 +1,36 @@
+play:
+  fields:
+    kind:
+      required: true
+      example: album
+      selector:
+        select:
+          options:
+            - track
+            - album
+            - playlist
+            - freeform
+    title:
+      example: Rumours
+      selector:
+        text:
+    artist:
+      example: Fleetwood Mac
+      selector:
+        text:
+    name:
+      example: Sunday Morning
+      selector:
+        text:
+    target:
+      required: true
+      example: Kitchen
+      selector:
+        text:
+    sender:
+      example: coreys_iphone
+      selector:
+        text:
+
+get_targets:
+  fields: {}
