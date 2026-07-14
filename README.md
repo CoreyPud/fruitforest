@@ -52,6 +52,8 @@ The webhook id is the endpoint's only credential. It lives in the HA server's
 Signed `.shortcut` files are ignored because private builds can embed the live
 webhook URL. Generate them locally and never attach them to a public release.
 
+FruitForest is available under the [MIT License](LICENSE).
+
 ## Adding or changing a room
 
 1. In Home Assistant, assign the Echo device to the correct **Area**.
