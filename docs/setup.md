@@ -124,6 +124,7 @@ sender slug:
 ```sh
 PLAY_ON_ECHO_WEBHOOK_URL='http://homeassistant.local:8123/api/webhook/YOUR_ID' \
 PLAY_ON_ECHO_SENDER='coreys_iphone' \
+PLAY_ON_ECHO_RANDOMIZE_UUIDS=1 \
 node tools/generate-shortcuts.mjs
 ```
 

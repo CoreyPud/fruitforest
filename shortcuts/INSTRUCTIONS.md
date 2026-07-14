@@ -64,5 +64,7 @@ Generate placeholder artifacts safe to keep in the repository:
 node tools/generate-shortcuts.mjs
 ```
 
-For a private build, provide `PLAY_ON_ECHO_WEBHOOK_URL` and optionally
-`PLAY_ON_ECHO_OUTPUT_DIR`. Never commit the real webhook URL.
+For a private build, provide `PLAY_ON_ECHO_WEBHOOK_URL`, set
+`PLAY_ON_ECHO_RANDOMIZE_UUIDS=1`, and optionally provide
+`PLAY_ON_ECHO_OUTPUT_DIR`. Fresh UUIDs prevent iCloud from reconciling a new
+import with an older empty copy. Never commit the real webhook URL.

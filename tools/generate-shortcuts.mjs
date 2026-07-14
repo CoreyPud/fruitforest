@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { randomUUID } from "node:crypto";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -12,9 +13,14 @@ const webhookUrl =
   process.env.PLAY_ON_ECHO_WEBHOOK_URL ||
   "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID";
 const sender = process.env.PLAY_ON_ECHO_SENDER || "";
+const randomizeUuids = process.env.PLAY_ON_ECHO_RANDOMIZE_UUIDS === "1";
 
 let uuidCounter = 0;
 const nextUuid = () => {
+  if (randomizeUuids) {
+    return randomUUID().toUpperCase();
+  }
+
   uuidCounter += 1;
   return `00000000-0000-4000-8000-${uuidCounter.toString(16).padStart(12, "0")}`;
 };
@@ -328,9 +334,11 @@ const lookupBranch = ({ matches, idOutputName, titleKey, kind }) => {
   ];
 };
 
-const postActions = ({ titleSource, targetSource, bodyLabel }) => {
+const postActions = ({ titleSource, bodyLabel }) => {
+  const chosenTarget = actionOutput("Chosen Item");
+
   return [
-    ...chooseFruitForestTarget(targetSource),
+    ...chooseFruitForestTarget(chosenTarget),
     getContents({
       url: webhookUrl,
       method: "POST",
@@ -339,13 +347,15 @@ const postActions = ({ titleSource, targetSource, bodyLabel }) => {
         field("title", titleSource || textWith`${variable("Title")}`),
         field("artist", textWith`${variable("Artist")}`),
         field("name", textWith`${variable("Name")}`),
-        field("target", textWith`${targetSource}`),
+        field("target", textWith`${chosenTarget}`),
         field("sender", sender),
       ],
     }),
     showNotification({
       title: "Sent to Echo",
-      body: bodyLabel || textWith`${variable("Kind")}: ${variable("Title")}${variable("Name")} -> ${targetSource}`,
+      body:
+        bodyLabel ||
+        textWith`${variable("Kind")}: ${variable("Title")}${variable("Name")} -> ${chosenTarget}`,
     }),
   ];
 };
@@ -387,7 +397,6 @@ const playOnEcho = () => {
   const playlistMatchCount = actionOutput("Playlist match count");
   const playlistName = actionOutput("Playlist name");
   const playlistMetadata = actionOutput("Playlist metadata");
-  const chosenTarget = actionOutput("Chosen Item");
   const sharedUrlInput = actionOutput("Shared URL Input");
   const appleMusicPage = actionOutput("Apple Music page");
   const currentSong = actionOutput("Current Song");
@@ -450,7 +459,7 @@ const playOnEcho = () => {
         }),
       ],
     }),
-    ...postActions({ targetSource: chosenTarget }),
+    ...postActions({}),
   ];
 
   const currentSongFallback = [
@@ -464,7 +473,7 @@ const playOnEcho = () => {
         getMusicProperty({ property: "Artist", input: currentSong, output: currentArtist }),
         setVariable("Artist", currentArtist),
         ...setTextVariable("Kind", "album"),
-        ...postActions({ targetSource: chosenTarget }),
+        ...postActions({}),
       ],
       ifFalse: [
         showNotification({
