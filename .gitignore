@@ -1,0 +1,7 @@
+.DS_Store
+
+# The signed shortcut builds may contain the private Home Assistant webhook.
+shortcuts/generated/*.shortcut
+
+# Deployed separately through OpenAI Sites.
+guide-site/

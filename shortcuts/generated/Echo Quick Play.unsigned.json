@@ -1,0 +1,173 @@
+{
+  "WFWorkflowClientVersion": "3107",
+  "WFWorkflowClientRelease": "26.0",
+  "WFWorkflowIcon": {
+    "WFWorkflowIconStartColor": 4274264319,
+    "WFWorkflowIconGlyphNumber": 61440
+  },
+  "WFWorkflowImportQuestions": [],
+  "WFWorkflowTypes": [],
+  "WFWorkflowInputContentItemClasses": [],
+  "WFWorkflowActions": [
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFInputType": "Text",
+        "WFAskActionPrompt": "Play what?",
+        "UUID": "b414e384-434b-49ad-a51d-8cd255cb8e4f",
+        "CustomOutputName": "Provided Input"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.list",
+      "WFWorkflowActionParameters": {
+        "WFItems": [
+          "kitchen",
+          "office",
+          "masterbedroom",
+          "everywhere"
+        ],
+        "UUID": "9c0fba70-3ada-4e9f-b995-1d9db5af0464",
+        "CustomOutputName": "Playback targets"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefromlist",
+      "WFWorkflowActionParameters": {
+        "WFChooseFromListActionPrompt": "Play where?",
+        "WFChooseFromListActionSelectMultiple": false,
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "9c0fba70-3ada-4e9f-b995-1d9db5af0464",
+            "OutputName": "Playback targets"
+          }
+        },
+        "UUID": "83b81834-2436-4b60-92f3-cf19fd9a3565",
+        "CustomOutputName": "Chosen Item"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "Advanced": true,
+        "WFHTTPMethod": "POST",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID",
+        "WFJSONValues": {
+          "WFSerializationType": "WFDictionaryFieldValue",
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "kind",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "freeform",
+                    "attachmentsByRange": {}
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "title",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "ActionOutput",
+                        "OutputUUID": "b414e384-434b-49ad-a51d-8cd255cb8e4f",
+                        "OutputName": "Provided Input"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "target",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "ActionOutput",
+                        "OutputUUID": "83b81834-2436-4b60-92f3-cf19fd9a3565",
+                        "OutputName": "Chosen Item"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "sender",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "",
+                    "attachmentsByRange": {}
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.notification",
+      "WFWorkflowActionParameters": {
+        "WFNotificationActionTitle": "Sent to Echo",
+        "WFNotificationActionBody": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "￼ -> ￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "b414e384-434b-49ad-a51d-8cd255cb8e4f",
+                "OutputName": "Provided Input"
+              },
+              "{5, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "83b81834-2436-4b60-92f3-cf19fd9a3565",
+                "OutputName": "Chosen Item"
+              }
+            }
+          }
+        },
+        "WFNotificationActionSound": true
+      }
+    }
+  ]
+}

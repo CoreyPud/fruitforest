@@ -19,7 +19,7 @@ order:
 
 2. **Choose from List**
    - List items: your target names, exactly matching the `device_map` /
-     `group_map` keys in the HA package — e.g. `kitchen`, `office`, `bedroom`,
+     `group_map` keys in the HA package — e.g. `kitchen`, `office`, `masterbedroom`,
      `everywhere`.
    - Prompt: `Play where?`
 

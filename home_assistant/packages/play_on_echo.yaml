@@ -74,7 +74,7 @@ script:
       device_map:
         kitchen: media_player.kitchen_echo
         office: media_player.office_echo
-        bedroom: media_player.bedroom_echo
+        masterbedroom: media_player.bedroom_echo
       # ── EDIT HERE: your Alexa multi-room groups ──────────────────────────
       # phrase:  the group name EXACTLY as it appears in the Alexa app
       # carrier: the Echo entity the typed group command is issued against.

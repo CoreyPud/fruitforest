@@ -1,0 +1,1429 @@
+{
+  "WFWorkflowClientVersion": "3107",
+  "WFWorkflowClientRelease": "26.0",
+  "WFWorkflowIcon": {
+    "WFWorkflowIconStartColor": 4274264319,
+    "WFWorkflowIconGlyphNumber": 61440
+  },
+  "WFWorkflowImportQuestions": [],
+  "WFWorkflowTypes": [
+    "ActionExtension"
+  ],
+  "WFWorkflowInputContentItemClasses": [
+    "WFAppContentItem",
+    "WFAppStoreAppContentItem",
+    "WFArticleContentItem",
+    "WFContactContentItem",
+    "WFDateContentItem",
+    "WFEmailAddressContentItem",
+    "WFFolderContentItem",
+    "WFGenericFileContentItem",
+    "WFImageContentItem",
+    "WFiTunesProductContentItem",
+    "WFLocationContentItem",
+    "WFDCMapsLinkContentItem",
+    "WFAVAssetContentItem",
+    "WFPDFContentItem",
+    "WFPhoneNumberContentItem",
+    "WFRichTextContentItem",
+    "WFSafariWebPageContentItem",
+    "WFStringContentItem",
+    "WFURLContentItem"
+  ],
+  "WFWorkflowHasShortcutInputVariables": true,
+  "WFWorkflowActions": [
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.link",
+      "WFWorkflowActionParameters": {
+        "UUID": "88eaff14-4472-4398-be48-01a18219afe8",
+        "CustomOutputName": "Shared URLs"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.nothing",
+      "WFWorkflowActionParameters": {}
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Title"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.nothing",
+      "WFWorkflowActionParameters": {}
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Artist"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.nothing",
+      "WFWorkflowActionParameters": {}
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Name"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "freeform",
+        "UUID": "a4e937da-0ba1-4402-b2de-95c2d08acad4",
+        "CustomOutputName": "Kind value"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Kind",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "a4e937da-0ba1-4402-b2de-95c2d08acad4",
+            "OutputName": "Kind value"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.count",
+      "WFWorkflowActionParameters": {
+        "WFCountType": "Items",
+        "Input": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "88eaff14-4472-4398-be48-01a18219afe8",
+            "OutputName": "Shared URLs"
+          }
+        },
+        "UUID": "ed332e02-0ef3-4397-80c4-51aae03a1a85",
+        "CustomOutputName": "Shared URL count"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "f1c8d5e7-4b50-40d2-920a-1d9e51bc17da",
+        "WFControlFlowMode": 0,
+        "WFCondition": 2,
+        "WFNumberValue": "0",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "WFSerializationType": "WFTextTokenAttachment",
+            "Value": {
+              "Type": "ActionOutput",
+              "OutputUUID": "ed332e02-0ef3-4397-80c4-51aae03a1a85",
+              "OutputName": "Shared URL count"
+            }
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getitemfromlist",
+      "WFWorkflowActionParameters": {
+        "WFItemSpecifier": "First Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "88eaff14-4472-4398-be48-01a18219afe8",
+            "OutputName": "Shared URLs"
+          }
+        },
+        "UUID": "71bda95b-6643-4f85-b284-d8ddb889f757",
+        "CustomOutputName": "Shared URL Input"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.text.match",
+      "WFWorkflowActionParameters": {
+        "WFMatchTextPattern": "(?<=[?&]i=)\\d+",
+        "WFMatchTextCaseSensitive": false,
+        "text": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "71bda95b-6643-4f85-b284-d8ddb889f757",
+                "OutputName": "Shared URL Input"
+              }
+            }
+          }
+        },
+        "UUID": "35731e34-6159-4492-88b3-bc4a3f1eb1d4",
+        "CustomOutputName": "Track matches"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.count",
+      "WFWorkflowActionParameters": {
+        "WFCountType": "Items",
+        "Input": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "35731e34-6159-4492-88b3-bc4a3f1eb1d4",
+            "OutputName": "Track matches"
+          }
+        },
+        "UUID": "9295a3c2-77d6-4b46-99b6-4ff1b9f65a55",
+        "CustomOutputName": "Track match count"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "e0f56f93-5b04-4dbb-bfbb-9c492c562f7a",
+        "WFControlFlowMode": 0,
+        "WFCondition": 2,
+        "WFNumberValue": "0",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "WFSerializationType": "WFTextTokenAttachment",
+            "Value": {
+              "Type": "ActionOutput",
+              "OutputUUID": "9295a3c2-77d6-4b46-99b6-4ff1b9f65a55",
+              "OutputName": "Track match count"
+            }
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getitemfromlist",
+      "WFWorkflowActionParameters": {
+        "WFItemSpecifier": "First Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "35731e34-6159-4492-88b3-bc4a3f1eb1d4",
+            "OutputName": "Track matches"
+          }
+        },
+        "UUID": "01b51b75-832f-4b7a-bcf3-cced2468c0f6",
+        "CustomOutputName": "Track ID"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "Advanced": false,
+        "WFHTTPMethod": "GET",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "https://itunes.apple.com/lookup?id=￼",
+            "attachmentsByRange": {
+              "{35, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "01b51b75-832f-4b7a-bcf3-cced2468c0f6",
+                "OutputName": "Track ID"
+              }
+            }
+          }
+        },
+        "UUID": "051b6397-7596-4769-9659-79e91af24efe",
+        "CustomOutputName": "track lookup response"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.dictionary",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "051b6397-7596-4769-9659-79e91af24efe",
+            "OutputName": "track lookup response"
+          }
+        },
+        "UUID": "f15064d9-a438-4761-98bd-01546596750a",
+        "CustomOutputName": "track lookup dictionary"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "results",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "f15064d9-a438-4761-98bd-01546596750a",
+            "OutputName": "track lookup dictionary"
+          }
+        },
+        "UUID": "b58de7a8-ad51-4aca-be20-e8699a35b829",
+        "CustomOutputName": "track results"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getitemfromlist",
+      "WFWorkflowActionParameters": {
+        "WFItemSpecifier": "First Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "b58de7a8-ad51-4aca-be20-e8699a35b829",
+            "OutputName": "track results"
+          }
+        },
+        "UUID": "b354fee6-e468-45b6-8e8b-b5cfce4b2423",
+        "CustomOutputName": "track lookup item"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Lookup Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "b354fee6-e468-45b6-8e8b-b5cfce4b2423",
+            "OutputName": "track lookup item"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "trackName",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "Variable",
+            "VariableName": "Lookup Item"
+          }
+        },
+        "UUID": "0b322990-ea7a-4ef1-b042-67bf216e5fa2",
+        "CustomOutputName": "track title"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Title",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "0b322990-ea7a-4ef1-b042-67bf216e5fa2",
+            "OutputName": "track title"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "artistName",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "Variable",
+            "VariableName": "Lookup Item"
+          }
+        },
+        "UUID": "ef03e3e0-fd5f-432a-83aa-545e0b31cc26",
+        "CustomOutputName": "track artist"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Artist",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "ef03e3e0-fd5f-432a-83aa-545e0b31cc26",
+            "OutputName": "track artist"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "track",
+        "UUID": "d0d8c18c-01eb-4fbc-92a6-b06d551e082f",
+        "CustomOutputName": "Kind value"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Kind",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "d0d8c18c-01eb-4fbc-92a6-b06d551e082f",
+            "OutputName": "Kind value"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "e0f56f93-5b04-4dbb-bfbb-9c492c562f7a",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.text.match",
+      "WFWorkflowActionParameters": {
+        "WFMatchTextPattern": "(?<=/)\\d+(?=\\?|$)",
+        "WFMatchTextCaseSensitive": false,
+        "text": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "71bda95b-6643-4f85-b284-d8ddb889f757",
+                "OutputName": "Shared URL Input"
+              }
+            }
+          }
+        },
+        "UUID": "517c6f93-4aed-4968-8b4f-c13f3b9871c4",
+        "CustomOutputName": "Album matches"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.count",
+      "WFWorkflowActionParameters": {
+        "WFCountType": "Items",
+        "Input": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "517c6f93-4aed-4968-8b4f-c13f3b9871c4",
+            "OutputName": "Album matches"
+          }
+        },
+        "UUID": "adbc5212-b0ef-4b22-abdb-f00451883d09",
+        "CustomOutputName": "Album match count"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "5cbed4d1-4de1-48b5-8652-92bedfeae45e",
+        "WFControlFlowMode": 0,
+        "WFCondition": 2,
+        "WFNumberValue": "0",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "WFSerializationType": "WFTextTokenAttachment",
+            "Value": {
+              "Type": "ActionOutput",
+              "OutputUUID": "adbc5212-b0ef-4b22-abdb-f00451883d09",
+              "OutputName": "Album match count"
+            }
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getitemfromlist",
+      "WFWorkflowActionParameters": {
+        "WFItemSpecifier": "First Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "517c6f93-4aed-4968-8b4f-c13f3b9871c4",
+            "OutputName": "Album matches"
+          }
+        },
+        "UUID": "b9a0a4ff-a4f2-4fc1-88e8-570f7b7c8bba",
+        "CustomOutputName": "Album ID"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "Advanced": false,
+        "WFHTTPMethod": "GET",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "https://itunes.apple.com/lookup?id=￼",
+            "attachmentsByRange": {
+              "{35, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "b9a0a4ff-a4f2-4fc1-88e8-570f7b7c8bba",
+                "OutputName": "Album ID"
+              }
+            }
+          }
+        },
+        "UUID": "fbd15a54-b6b6-460c-b095-135db9912fdf",
+        "CustomOutputName": "album lookup response"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.dictionary",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "fbd15a54-b6b6-460c-b095-135db9912fdf",
+            "OutputName": "album lookup response"
+          }
+        },
+        "UUID": "7f378bad-6075-4743-8544-f91cf97f3c3e",
+        "CustomOutputName": "album lookup dictionary"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "results",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "7f378bad-6075-4743-8544-f91cf97f3c3e",
+            "OutputName": "album lookup dictionary"
+          }
+        },
+        "UUID": "ba6719ce-a7ae-4656-a479-4beaefef7713",
+        "CustomOutputName": "album results"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getitemfromlist",
+      "WFWorkflowActionParameters": {
+        "WFItemSpecifier": "First Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "ba6719ce-a7ae-4656-a479-4beaefef7713",
+            "OutputName": "album results"
+          }
+        },
+        "UUID": "66f0c4ef-6489-4808-86a6-2ffdaa7b5266",
+        "CustomOutputName": "album lookup item"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Lookup Item",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "66f0c4ef-6489-4808-86a6-2ffdaa7b5266",
+            "OutputName": "album lookup item"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "collectionName",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "Variable",
+            "VariableName": "Lookup Item"
+          }
+        },
+        "UUID": "6f6e2ffe-4abe-484c-b005-0d28f03209c6",
+        "CustomOutputName": "album title"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Title",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "6f6e2ffe-4abe-484c-b005-0d28f03209c6",
+            "OutputName": "album title"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "artistName",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "Variable",
+            "VariableName": "Lookup Item"
+          }
+        },
+        "UUID": "d7395aa5-c665-4307-9d2b-049ec42f7a32",
+        "CustomOutputName": "album artist"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Artist",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "d7395aa5-c665-4307-9d2b-049ec42f7a32",
+            "OutputName": "album artist"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "album",
+        "UUID": "f754ccae-f463-4336-b940-c779c56e75a5",
+        "CustomOutputName": "Kind value"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Kind",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "f754ccae-f463-4336-b940-c779c56e75a5",
+            "OutputName": "Kind value"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "5cbed4d1-4de1-48b5-8652-92bedfeae45e",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.text.match",
+      "WFWorkflowActionParameters": {
+        "WFMatchTextPattern": "/playlist/",
+        "WFMatchTextCaseSensitive": false,
+        "text": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "71bda95b-6643-4f85-b284-d8ddb889f757",
+                "OutputName": "Shared URL Input"
+              }
+            }
+          }
+        },
+        "UUID": "f11f00c2-f87a-4916-984f-301b26cb36c3",
+        "CustomOutputName": "Playlist matches"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.count",
+      "WFWorkflowActionParameters": {
+        "WFCountType": "Items",
+        "Input": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "f11f00c2-f87a-4916-984f-301b26cb36c3",
+            "OutputName": "Playlist matches"
+          }
+        },
+        "UUID": "0928e67c-3be5-4eee-8f2a-ec9fcf4f251f",
+        "CustomOutputName": "Playlist match count"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "b482cf1b-d511-443f-8c9d-3228737146f8",
+        "WFControlFlowMode": 0,
+        "WFCondition": 2,
+        "WFNumberValue": "0",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "WFSerializationType": "WFTextTokenAttachment",
+            "Value": {
+              "Type": "ActionOutput",
+              "OutputUUID": "0928e67c-3be5-4eee-8f2a-ec9fcf4f251f",
+              "OutputName": "Playlist match count"
+            }
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "Advanced": false,
+        "WFHTTPMethod": "GET",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "https://music.apple.com/api/oembed?url=￼",
+            "attachmentsByRange": {
+              "{39, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "71bda95b-6643-4f85-b284-d8ddb889f757",
+                "OutputName": "Shared URL Input"
+              }
+            }
+          }
+        },
+        "UUID": "07415881-e84b-4ad6-b199-4e9fa41a2db8",
+        "CustomOutputName": "Apple Music page"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.dictionary",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "07415881-e84b-4ad6-b199-4e9fa41a2db8",
+            "OutputName": "Apple Music page"
+          }
+        },
+        "UUID": "cf6d6f18-821a-436f-aaef-f0cdee00d29c",
+        "CustomOutputName": "Playlist metadata"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFDictionaryKey": "title",
+        "WFGetDictionaryValueType": "Value",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "cf6d6f18-821a-436f-aaef-f0cdee00d29c",
+            "OutputName": "Playlist metadata"
+          }
+        },
+        "UUID": "e842128b-f1c0-4312-b8d6-aea62c397c4c",
+        "CustomOutputName": "Playlist name"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Name",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "e842128b-f1c0-4312-b8d6-aea62c397c4c",
+            "OutputName": "Playlist name"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "playlist",
+        "UUID": "6f15ec39-a03f-4731-bf3c-b56d3d805745",
+        "CustomOutputName": "Kind value"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Kind",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "6f15ec39-a03f-4731-bf3c-b56d3d805745",
+            "OutputName": "Kind value"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "b482cf1b-d511-443f-8c9d-3228737146f8",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Title",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "71bda95b-6643-4f85-b284-d8ddb889f757",
+            "OutputName": "Shared URL Input"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "freeform",
+        "UUID": "1292bbc4-805f-4f07-ad03-23ff9f74a52b",
+        "CustomOutputName": "Kind value"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Kind",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "1292bbc4-805f-4f07-ad03-23ff9f74a52b",
+            "OutputName": "Kind value"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "b482cf1b-d511-443f-8c9d-3228737146f8",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "5cbed4d1-4de1-48b5-8652-92bedfeae45e",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "e0f56f93-5b04-4dbb-bfbb-9c492c562f7a",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.list",
+      "WFWorkflowActionParameters": {
+        "WFItems": [
+          "kitchen",
+          "office",
+          "masterbedroom",
+          "everywhere"
+        ],
+        "UUID": "06b0c80e-67e3-4d4f-8852-4f2a7272657e",
+        "CustomOutputName": "Playback targets"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefromlist",
+      "WFWorkflowActionParameters": {
+        "WFChooseFromListActionPrompt": "Play where?",
+        "WFChooseFromListActionSelectMultiple": false,
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "06b0c80e-67e3-4d4f-8852-4f2a7272657e",
+            "OutputName": "Playback targets"
+          }
+        },
+        "UUID": "0ac865c3-9927-4467-9061-d43d0130acca",
+        "CustomOutputName": "Chosen Item"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "Advanced": true,
+        "WFHTTPMethod": "POST",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID",
+        "WFJSONValues": {
+          "WFSerializationType": "WFDictionaryFieldValue",
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "kind",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Kind"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "title",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Title"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "artist",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Artist"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "name",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Name"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "target",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "ActionOutput",
+                        "OutputUUID": "0ac865c3-9927-4467-9061-d43d0130acca",
+                        "OutputName": "Chosen Item"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "sender",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "",
+                    "attachmentsByRange": {}
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.notification",
+      "WFWorkflowActionParameters": {
+        "WFNotificationActionTitle": "Sent to Echo",
+        "WFNotificationActionBody": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "￼: ￼￼ -> ￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "Variable",
+                "VariableName": "Kind"
+              },
+              "{3, 1}": {
+                "Type": "Variable",
+                "VariableName": "Title"
+              },
+              "{4, 1}": {
+                "Type": "Variable",
+                "VariableName": "Name"
+              },
+              "{9, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "0ac865c3-9927-4467-9061-d43d0130acca",
+                "OutputName": "Chosen Item"
+              }
+            }
+          }
+        },
+        "WFNotificationActionSound": true
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "f1c8d5e7-4b50-40d2-920a-1d9e51bc17da",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getcurrentsong",
+      "WFWorkflowActionParameters": {
+        "UUID": "678f0ec0-9da3-4cb5-a927-85af5315a87c",
+        "CustomOutputName": "Current Song"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.count",
+      "WFWorkflowActionParameters": {
+        "WFCountType": "Items",
+        "Input": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "678f0ec0-9da3-4cb5-a927-85af5315a87c",
+            "OutputName": "Current Song"
+          }
+        },
+        "UUID": "1aad755d-410c-4337-ad57-e2d151fcc7cb",
+        "CustomOutputName": "Current Song count"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "4a39361a-0ae1-4fc6-b9ea-551dc4024c75",
+        "WFControlFlowMode": 0,
+        "WFCondition": 2,
+        "WFNumberValue": "0",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "WFSerializationType": "WFTextTokenAttachment",
+            "Value": {
+              "Type": "ActionOutput",
+              "OutputUUID": "1aad755d-410c-4337-ad57-e2d151fcc7cb",
+              "OutputName": "Current Song count"
+            }
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.properties.music",
+      "WFWorkflowActionParameters": {
+        "WFContentItemPropertyName": "Album",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "678f0ec0-9da3-4cb5-a927-85af5315a87c",
+            "OutputName": "Current Song"
+          }
+        },
+        "UUID": "5ae9dc8b-a7ff-4a5a-91cc-27f599a2ddcd",
+        "CustomOutputName": "Current Album"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Title",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "5ae9dc8b-a7ff-4a5a-91cc-27f599a2ddcd",
+            "OutputName": "Current Album"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.properties.music",
+      "WFWorkflowActionParameters": {
+        "WFContentItemPropertyName": "Artist",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "678f0ec0-9da3-4cb5-a927-85af5315a87c",
+            "OutputName": "Current Song"
+          }
+        },
+        "UUID": "324d5d12-c720-4316-8aa1-4f667497a8d7",
+        "CustomOutputName": "Current Artist"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Artist",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "324d5d12-c720-4316-8aa1-4f667497a8d7",
+            "OutputName": "Current Artist"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "album",
+        "UUID": "a0598198-20b2-4343-9222-9a6489780c15",
+        "CustomOutputName": "Kind value"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFVariableName": "Kind",
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "a0598198-20b2-4343-9222-9a6489780c15",
+            "OutputName": "Kind value"
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.list",
+      "WFWorkflowActionParameters": {
+        "WFItems": [
+          "kitchen",
+          "office",
+          "masterbedroom",
+          "everywhere"
+        ],
+        "UUID": "9bde579a-629f-45da-a209-a85e8bcffdca",
+        "CustomOutputName": "Playback targets"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefromlist",
+      "WFWorkflowActionParameters": {
+        "WFChooseFromListActionPrompt": "Play where?",
+        "WFChooseFromListActionSelectMultiple": false,
+        "WFInput": {
+          "WFSerializationType": "WFTextTokenAttachment",
+          "Value": {
+            "Type": "ActionOutput",
+            "OutputUUID": "9bde579a-629f-45da-a209-a85e8bcffdca",
+            "OutputName": "Playback targets"
+          }
+        },
+        "UUID": "0ac865c3-9927-4467-9061-d43d0130acca",
+        "CustomOutputName": "Chosen Item"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "Advanced": true,
+        "WFHTTPMethod": "POST",
+        "WFHTTPBodyType": "JSON",
+        "WFURL": "http://YOUR_HA_HOST:8123/api/webhook/REPLACE_WITH_LONG_RANDOM_ID",
+        "WFJSONValues": {
+          "WFSerializationType": "WFDictionaryFieldValue",
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "kind",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Kind"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "title",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Title"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "artist",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Artist"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "name",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "Variable",
+                        "VariableName": "Name"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "target",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "￼",
+                    "attachmentsByRange": {
+                      "{0, 1}": {
+                        "Type": "ActionOutput",
+                        "OutputUUID": "0ac865c3-9927-4467-9061-d43d0130acca",
+                        "OutputName": "Chosen Item"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "WFItemType": 0,
+                "WFKey": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "sender",
+                    "attachmentsByRange": {}
+                  }
+                },
+                "WFValue": {
+                  "WFSerializationType": "WFTextTokenString",
+                  "Value": {
+                    "string": "",
+                    "attachmentsByRange": {}
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.notification",
+      "WFWorkflowActionParameters": {
+        "WFNotificationActionTitle": "Sent to Echo",
+        "WFNotificationActionBody": {
+          "WFSerializationType": "WFTextTokenString",
+          "Value": {
+            "string": "￼: ￼￼ -> ￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "Type": "Variable",
+                "VariableName": "Kind"
+              },
+              "{3, 1}": {
+                "Type": "Variable",
+                "VariableName": "Title"
+              },
+              "{4, 1}": {
+                "Type": "Variable",
+                "VariableName": "Name"
+              },
+              "{9, 1}": {
+                "Type": "ActionOutput",
+                "OutputUUID": "0ac865c3-9927-4467-9061-d43d0130acca",
+                "OutputName": "Chosen Item"
+              }
+            }
+          }
+        },
+        "WFNotificationActionSound": true
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "4a39361a-0ae1-4fc6-b9ea-551dc4024c75",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.notification",
+      "WFWorkflowActionParameters": {
+        "WFNotificationActionTitle": "Nothing sent",
+        "WFNotificationActionBody": "No link or current Apple Music song was available. Start a song from the album, then share again.",
+        "WFNotificationActionSound": true
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "4a39361a-0ae1-4fc6-b9ea-551dc4024c75",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "f1c8d5e7-4b50-40d2-920a-1d9e51bc17da",
+        "WFControlFlowMode": 2
+      }
+    }
+  ]
+}

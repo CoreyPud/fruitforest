@@ -1,9 +1,9 @@
 # Play on Echo — share-sheet Shortcut build recipe
 
-The primary experience: share a track, album, or playlist from Apple Music,
-pick a speaker or group, and the exact music plays. One Shortcut covers
-iPhone, iPad, and Mac — the Music app hands over the same `music.apple.com`
-URL on all three.
+The verified primary experience: start a song from an album, share that album
+from Apple Music, pick a speaker or group, and the album plays. When Apple
+Music supplies a usable URL, the same Shortcut can also resolve tracks and
+playlists. One Shortcut covers iPhone, iPad, and Mac.
 
 Prerequisites: Stage 3 of `docs/setup.md` complete; `quick-command.md` built
 and verified (it proves the webhook leg this Shortcut reuses).
@@ -27,20 +27,33 @@ Create a new Shortcut named **Play on Echo**.
 
 **Share-sheet configuration (get this right or it won't appear):**
 - In the Shortcut's details (ⓘ): enable **Show in Share Sheet**.
-- Share Sheet Types: select **URLs** only. Do NOT select "Media" — that means
-  audio/video *files* and will prevent the Shortcut from appearing for Apple
-  Music shares.
+- Generated copies must set `WFWorkflowHasShortcutInputVariables` to `true`;
+  otherwise iOS imports `Shortcut Input` as a blank generic `Input`.
+- Share Sheet Types: choose **Select All**. Apple Music can provide an iTunes
+  product or media share object on iOS rather than a bare URL; limiting the
+  shortcut to URLs discards that input before the first action runs.
 - macOS additionally needs the extension switches — Stage 5 of `docs/setup.md`.
 
 **Actions in order:**
 
-1. **Get URLs from Input** (input: Shortcut Input) — normalizes the share
-   payload to a URL.
+1. **Get URLs from Input** must be the first action, with no manually assigned
+   input variable. Shortcuts then supplies Shortcut Input through the native
+   first-action pipeline and extracts the link from either a URL or Apple
+   Music's richer share object when iOS exposes one. Generated
+   `ExtensionInput` tokens are not reliably recognized after import.
 
-2. **Expand URL** (on the result of step 1) — resolves `geo.music.apple.com`
-   affiliate-style links, storefront-less URLs, legacy `itunes.apple.com`
-   links, and shortener wrappers to the final `music.apple.com` URL before any
-   parsing.
+   Count the URLs immediately. If the count is zero, use **Get Current Song**,
+   then **Get Details of Music** for `Album` and `Artist`. Apple Music on iOS
+   can invoke a share-sheet Shortcut without supplying a coercible URL; this
+   fallback is the verified native metadata path. If there is also no current
+   song, show **Nothing sent** and stop before the room picker or webhook.
+   Start a song from the album before sharing so the fallback identifies the
+   intended album.
+
+2. **Get First Item from List** (on the result of step 1) — uses the canonical
+   `music.apple.com` URL supplied by Apple Music's share sheet. Avoid **Expand
+   URL** here; on macOS it can stall indefinitely for otherwise valid Apple
+   Music URLs.
 
 3. **Branch by URL shape.** Use *Match Text* (regex) on the expanded URL, with
    an If block per case:
@@ -62,28 +75,21 @@ Create a new Shortcut named **Play on Echo**.
      kind = `album`.
 
    **Case playlist — URL contains `/playlist/`:**
-   - **Get Contents of URL** on the expanded URL itself (GET).
-   - **Match Text** on the page HTML:
-     `og:title" content="(.*) on Apple Music"`
-   - Take capture group 1, then — only if it contains ` by ` — split on the
-     **last** ` by ` and keep the left side as the name (the right side is
-     the owner). Splitting on the last occurrence keeps names that themselves
-     contain " by " intact ("Songs by the Sea by Corey" → "Songs by the Sea").
-     Editorial `pl.` playlists have no owner segment; if an editorial name
-     itself ends in " by …" the split over-trims — rename or use the
-     quick-command Shortcut for that one.
+   - **Get Contents of URL** on
+     `https://music.apple.com/api/oembed?url=<shared URL>` (GET).
+   - **Get Dictionary from Input**, then get the `title` value as the playlist
+     name. This avoids brittle HTML scraping and works for personal and
+     editorial playlists.
    - kind = `playlist`. Works for personal `pl.u-` links (public once shared).
 
-4. **Fallback guard.** After the track/album lookups, add an If: if `title`
-   *has no value* (Lookup empty or unreachable), fetch the expanded URL and
-   parse `og:title` exactly as in the playlist case — track/album pages carry
-   it too ("Title by Artist on Apple Music"; the last-` by `-split's right
-   side IS the artist here). If that also fails, take the URL's slug segment,
-   replace `-` with spaces, and use it as `title` with no artist.
+4. **Fallback guard.** If the URL is not a recognized track, album, or
+   playlist shape, send it as `freeform`. Home Assistant still receives a
+   visible request instead of the shortcut failing silently.
 
 5. **Choose from List** — same target list as the quick-command Shortcut
    (must match the HA target map; see the device-change checklist in
-   `docs/setup.md`).
+   `docs/setup.md`). Connect its input explicitly to the List action instead
+   of relying on the previous-action connection.
 
 6. **Dictionary**
    - `kind`: from the matched case
